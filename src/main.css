@@ -737,15 +737,12 @@ footer .crf-footer--copyright {
 
 #shoes {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   min-height: 50vh;
 }
 
 .shoe {
   display: flex;
-  max-width: 140px;
-  flex-direction: column;
 }
 
 #cart img {
