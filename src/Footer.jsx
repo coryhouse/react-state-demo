@@ -33,34 +33,6 @@ export default function Footer() {
             </div>
             <div className="crf-footer--links">
               <div className="crf-footer--header text-primary">
-                Company Info
-              </div>
-              <ul>
-                <li>
-                  <a href="#">About Us</a>
-                </li>
-                <li>
-                  <a href="#">Careers</a>
-                </li>
-                <li>
-                  <a href="#">Press</a>
-                </li>
-                <li>
-                  <a href="#">Sustainability</a>
-                </li>
-                <li>
-                  <a href="#">Affiliates</a>
-                </li>
-                <li>
-                  <a href="#">Students</a>
-                </li>
-                <li>
-                  <a href="#">Mobile Apps</a>
-                </li>
-              </ul>
-            </div>
-            <div className="crf-footer--links">
-              <div className="crf-footer--header text-primary">
                 Privacy &amp; Terms
               </div>
               <ul>

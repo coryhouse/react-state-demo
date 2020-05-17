@@ -1,17 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-export default function Nav() {
+export default function Nav({ cart }) {
   return (
     <nav className="navbar navbar-expand flex-column flex-md-row header-nav--nav">
       <div className="container">
         <div className="d-md-flex justify-content-between">
           <div className="navbar-brand d-flex justify-content-between align-items-center">
-            <a href="#">
+            <Link to="/">
               <img
                 alt="Carved Rock Fitness"
                 src="https://www.pluralsight.com/content/dam/pluralsight2/teach/author-tools/carved-rock-fitness/logos/carved-rock-logo.png"
               />
-            </a>{" "}
+            </Link>{" "}
             <button
               aria-controls="navbarNav"
               aria-expanded="false"
@@ -52,23 +53,10 @@ export default function Nav() {
                     Bags &amp; Travel
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    Trail Reviews
-                  </a>
-                </li>
               </ul>
             </div>
             <div className="header-nav--utilities d-flex align-items-center justify-content-end flex-row-reverse flex-row flex-md-row">
-              <div className="account d-flex flex-column">
-                John Doe <a href="#">Log Out</a>
-              </div>
-              <div className="image">
-                <img
-                  alt="John Doe"
-                  src="https://www.pluralsight.com/content/dam/pluralsight2/teach/author-tools/carved-rock-fitness/profile-pic.jpg"
-                />
-              </div>
+              <Link to="/cart">View Cart ({cart.length})</Link>
             </div>
           </div>
         </div>
