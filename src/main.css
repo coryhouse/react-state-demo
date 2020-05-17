@@ -744,6 +744,7 @@ footer .crf-footer--copyright {
 .shoe {
   display: flex;
   max-width: 350px;
+  text-align: center;
 }
 
 #cart img {
