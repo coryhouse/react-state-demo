@@ -24,7 +24,7 @@ export default function Cart({ cart, shoes, removeFromCart }) {
               <tr>
                 <td>
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-link"
                     onClick={() => removeFromCart(shoe.id)}
                   >
                     Remove
