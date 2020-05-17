@@ -16,12 +16,13 @@ export default function Cart({ cart, shoes, removeFromCart }) {
           <thead>
             <th></th>
             <th>Price</th>
+            <th>Size</th>
             <th>Quantity</th>
             <th>Total</th>
           </thead>
           <tbody>
-            {cart.map((id) => {
-              const shoe = shoes.find((s) => s.id === id);
+            {cart.map((shoeInCart) => {
+              const shoe = shoes.find((s) => s.id === shoeInCart.id);
               return (
                 <tr>
                   <td>
@@ -34,6 +35,7 @@ export default function Cart({ cart, shoes, removeFromCart }) {
                     <img src={`/images/shoe${shoe.id}.jpg`} alt="shoe" />
                   </td>
                   <td>${shoe.price}</td>
+                  <td>{shoeInCart.size}</td>
                   <td>
                     <input type="number" onChange={setQuantity} />
                   </td>

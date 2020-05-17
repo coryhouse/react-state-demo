@@ -26,7 +26,7 @@ export default function ShoeDetail({ shoes, cart, addToCart }) {
           <button
             className="btn btn-primary"
             disabled={!size}
-            onClick={() => addToCart(shoe.id)}
+            onClick={() => addToCart(shoe.id, size)}
           >
             Add to cart
           </button>

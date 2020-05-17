@@ -17,7 +17,9 @@ function App() {
   const history = useHistory();
   const [status, setStatus] = useState(STATUS.LOADING);
   const [shoes, setShoes] = useState([]);
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart")) ?? []
+  );
 
   useEffect(() => {
     getShoes().then((response) => {
@@ -26,9 +28,9 @@ function App() {
     });
   }, []);
 
-  function addToCart(id) {
+  function addToCart(id, size) {
     setCart((cart) => {
-      const newCart = [...cart, id];
+      const newCart = [...cart, { id, size }];
       // Write cart to localStorage so cart persists if tab is closed.
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
