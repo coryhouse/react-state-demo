@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import SelectSize from "./SelectSize";
 
 export default function Home({ shoes }) {
   const [size, setSize] = useState(localStorage.getItem("shoe-size"));
@@ -12,19 +13,14 @@ export default function Home({ shoes }) {
     <>
       <section id="filters">
         <label htmlFor="size">Filter by Size:</label>{" "}
-        <select
-          id="size"
-          value={size}
+        <SelectSize
           onChange={(e) => {
             setSize(e.target.value);
             localStorage.setItem("shoe-size", e.target.value);
           }}
-        >
-          <option value="">All Sizes</option>
-          {[7, 8, 9].map((s) => (
-            <option value={s}>{s}</option>
-          ))}
-        </select>
+          value={size}
+          defaultOptionLabel="All Sizes"
+        />
       </section>
       <section id="shoes">
         {filteredShoes.length === 0 && "No shoes found."}
