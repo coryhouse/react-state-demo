@@ -50,17 +50,19 @@ function App() {
     <div className="crf">
       <Nav cart={cart} />
 
-      <Route path="/" exact>
-        <Home shoes={shoes} />
-      </Route>
+      <main>
+        <Route path="/" exact>
+          <Home shoes={shoes} />
+        </Route>
 
-      <Route path="/shoe/:id">
-        <ShoeDetail cart={cart} shoes={shoes} addToCart={addToCart} />
-      </Route>
+        <Route path="/shoe/:id">
+          <ShoeDetail cart={cart} shoes={shoes} addToCart={addToCart} />
+        </Route>
 
-      <Route path="/cart">
-        <Cart cart={cart} shoes={shoes} removeFromCart={removeFromCart} />
-      </Route>
+        <Route path="/cart">
+          <Cart cart={cart} shoes={shoes} removeFromCart={removeFromCart} />
+        </Route>
+      </main>
 
       <Footer />
     </div>

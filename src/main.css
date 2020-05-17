@@ -743,6 +743,7 @@ footer .crf-footer--copyright {
 
 .shoe {
   display: flex;
+  max-width: 350px;
 }
 
 #cart img {
@@ -757,4 +758,8 @@ footer .crf-footer--copyright {
 
 input[type="number"] {
   width: 50px;
+}
+
+main {
+  padding: 20px;
 }
