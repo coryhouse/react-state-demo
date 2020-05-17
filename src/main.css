@@ -757,3 +757,7 @@ footer .crf-footer--copyright {
   padding-left: 20px;
   padding-right: 20px;
 }
+
+input[type="number"] {
+  width: 50px;
+}
