@@ -737,6 +737,7 @@ footer .crf-footer--copyright {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  min-height: 50vh;
 }
 
 .shoe {
