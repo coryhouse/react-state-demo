@@ -736,6 +736,7 @@ footer .crf-footer--copyright {
 #shoes {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .shoe {
