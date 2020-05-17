@@ -5,7 +5,7 @@ export default function Home({ shoes }) {
   const [size, setSize] = useState(localStorage.getItem("shoe-size"));
 
   const filteredShoes = size
-    ? shoes.filter((shoe) => shoe.sizes.some((s) => s === size))
+    ? shoes.filter((shoe) => shoe.sizes.some((s) => s === parseInt(size)))
     : shoes;
 
   return (
@@ -20,7 +20,7 @@ export default function Home({ shoes }) {
             localStorage.setItem("shoe-size", e.target.value);
           }}
         >
-          <option>All Sizes</option>
+          <option value="">All Sizes</option>
           {[7, 8, 9].map((s) => (
             <option value={s}>{s}</option>
           ))}
