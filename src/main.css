@@ -733,6 +733,8 @@ footer .crf-footer--copyright {
   }
 }
 
+/** MY STYLES ARE BELOW HERE **/
+
 #shoes {
   display: flex;
   flex-direction: row;
@@ -748,4 +750,10 @@ footer .crf-footer--copyright {
 
 #cart img {
   width: 150px;
+}
+
+#cart td,
+#cart th {
+  padding-left: 20px;
+  padding-right: 20px;
 }
