@@ -8,7 +8,8 @@ export default function ShoeDetail({ shoes, cart, addToCart }) {
   return (
     <>
       <h1>{shoe.name}</h1>
-
+      <p>{shoe.description}</p>
+      <h2>${shoe.price}</h2>
       <p>
         {cart.find((c) => c === shoe.id) ? (
           <Link to="/cart">In Cart</Link>
