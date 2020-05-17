@@ -732,3 +732,18 @@ footer .crf-footer--copyright {
     order: 7;
   }
 }
+
+#shoes {
+  display: flex;
+  flex-direction: row;
+}
+
+.shoe {
+  display: flex;
+  max-width: 140px;
+  flex-direction: column;
+}
+
+#cart img {
+  width: 150px;
+}
