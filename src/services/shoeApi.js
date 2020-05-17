@@ -6,7 +6,7 @@ export async function getShoes() {
       price: 94.95,
       width: ["M"],
       sizes: [7, 8],
-      description: "This rugged shoe will get you up the mountain safely.",
+      description: "This rugged boot will get you up the mountain safely.",
     },
     {
       id: 2,
