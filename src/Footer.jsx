@@ -52,7 +52,10 @@ export default function Footer() {
       </div>
       <div className="crf-footer--logo d-flex">
         <div className="container justify-content-start align-items-center d-flex flex-column">
-          <img src="https://www.pluralsight.com/content/dam/pluralsight2/teach/author-tools/carved-rock-fitness/logos/pluralsight-white.png" />
+          <img
+            src="https://www.pluralsight.com/content/dam/pluralsight2/teach/author-tools/carved-rock-fitness/logos/pluralsight-white.png"
+            alt="Pluralsight logo"
+          />
           <div>
             This site is created for demonstrative purposes only and does not
             offer any real products or services.
