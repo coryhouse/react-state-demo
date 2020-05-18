@@ -12,22 +12,22 @@ export default function Footer() {
               </div>
               <ul>
                 <li>
-                  <a href="#">Contact Us</a>
+                  <a href="/">Contact Us</a>
                 </li>
                 <li>
-                  <a href="#">Order Tracker</a>
+                  <a href="/">Order Tracker</a>
                 </li>
                 <li>
-                  <a href="#">Returns &amp; Refunds</a>
+                  <a href="/">Returns &amp; Refunds</a>
                 </li>
                 <li>
-                  <a href="#">Size Guide</a>
+                  <a href="/">Size Guide</a>
                 </li>
                 <li>
-                  <a href="#">Store Locator</a>
+                  <a href="/">Store Locator</a>
                 </li>
                 <li>
-                  <a href="#">Site Map</a>
+                  <a href="/">Site Map</a>
                 </li>
               </ul>
             </div>
@@ -37,13 +37,13 @@ export default function Footer() {
               </div>
               <ul>
                 <li>
-                  <a href="#">Privacy &amp; Security</a>
+                  <a href="/">Privacy &amp; Security</a>
                 </li>
                 <li>
-                  <a href="#">Statement</a>
+                  <a href="/">Statement</a>
                 </li>
                 <li>
-                  <a href="#">Terms &amp; Conditions</a>
+                  <a href="/">Terms &amp; Conditions</a>
                 </li>
               </ul>
             </div>
