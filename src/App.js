@@ -29,11 +29,14 @@ function App() {
   }, []);
 
   function addToCart(id, size) {
+    if (isNaN(size)) throw new Error("Size must be a number");
     setCart((cart) => {
       const alreadyInCart = cart.find((s) => s.id === id && s.size === size);
       const newCart = alreadyInCart
         ? cart.map((c) =>
-            c.id === id ? { ...c, quantity: c.quantity + 1 } : c
+            c.id === id && c.size === size
+              ? { ...c, quantity: parseInt(c.quantity) + 1 }
+              : c
           )
         : [...cart, { id, size, quantity: 1 }];
       localStorage.setItem("cart", JSON.stringify(newCart));
@@ -44,10 +47,12 @@ function App() {
 
   // TODO show using Immer
   function handleCartQuantityChange(id, size, quantity) {
+    if (isNaN(size)) throw new Error("Size must be a number");
+    if (isNaN(quantity)) throw new Error("Quantity must be a number");
     setCart((cart) => {
       const newCart =
         quantity === 0
-          ? cart.filter((c) => c.size === size && c.id === id)
+          ? cart.filter((c) => c.size !== size && c.id !== id)
           : cart.map((c) =>
               c.id === id && c.size === size ? { ...c, quantity } : c
             );
