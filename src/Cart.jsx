@@ -14,7 +14,7 @@ export default function Cart({ cart, shoes, onQuantityChange }) {
           <p>
             <select
               onChange={(e) =>
-                onQuantityChange(id, shoeInCart.size, e.target.value)
+                onQuantityChange(id, shoeInCart.size, parseInt(e.target.value))
               }
               value={shoeInCart.quantity}
             >
