@@ -30,17 +30,24 @@ function App() {
 
   function addToCart(id, size) {
     setCart((cart) => {
-      const newCart = [...cart, { id, size }];
-      // Write cart to localStorage so cart persists if tab is closed.
+      const alreadyInCart = cart.find((s) => s.id === id && s.size === size);
+      const newCart = alreadyInCart
+        ? cart.map((c) =>
+            c.id === id ? { ...c, quantity: c.quantity + 1 } : c
+          )
+        : [...cart, { id, size, quantity: 1 }];
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
     });
     history.push("/cart");
   }
 
-  function removeFromCart(id) {
+  function handleCartQuantityChange(id, size, quantity) {
     setCart((cart) => {
-      const newCart = cart.filter((c) => c !== id);
+      const newCart =
+        quantity === 0
+          ? cart.filter((c) => c.id !== id)
+          : cart.map((c) => (c.id === id ? { ...c, quantity } : c));
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
     });
@@ -62,7 +69,11 @@ function App() {
         </Route>
 
         <Route path="/cart">
-          <Cart cart={cart} shoes={shoes} removeFromCart={removeFromCart} />
+          <Cart
+            cart={cart}
+            shoes={shoes}
+            onQuantityChange={handleCartQuantityChange}
+          />
         </Route>
       </main>
 
