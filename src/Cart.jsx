@@ -12,8 +12,13 @@ export default function Cart({ cart, shoes, onQuantityChange }) {
           <p>${price}</p>
           <p>Size: {shoeInCart.size}</p>
           <p>
-            <select onChange={onQuantityChange} value={shoeInCart.quantity}>
-              <option value="Remove">Remove</option>
+            <select
+              onChange={(e) =>
+                onQuantityChange(id, shoeInCart.size, e.target.value)
+              }
+              value={shoeInCart.quantity}
+            >
+              <option value="0">Remove</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
