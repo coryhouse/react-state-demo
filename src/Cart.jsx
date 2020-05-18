@@ -5,7 +5,7 @@ export default function Cart({ cart, shoes, onQuantityChange }) {
   function renderItem(shoeInCart) {
     const { price, id, name } = shoes.find((s) => s.id === shoeInCart.id);
     return (
-      <div className="cart-item">
+      <div key={id + shoeInCart.size} className="cart-item">
         <img src={`/images/shoe${id}.jpg`} alt="shoe" />
         <div>
           <h3>{name}</h3>
