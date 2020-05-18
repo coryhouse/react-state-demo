@@ -1,8 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Cart({ cart, shoes, removeFromCart }) {
-  function setQuantity(event) {}
+export default function Cart({ cart, shoes, onQuantityChange }) {
+  function renderItem(shoeInCart) {
+    const { price, id, name } = shoes.find((s) => s.id === shoeInCart.id);
+    return (
+      <div className="cart-item">
+        <img src={`/images/shoe${id}.jpg`} alt="shoe" />
+        <div>
+          <h3>{name}</h3>
+          <p>${price}</p>
+          <p>Size: {shoeInCart.size}</p>
+          <p>
+            <select onChange={onQuantityChange} value={shoeInCart.quantity}>
+              <option value="Remove">Remove</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section id="cart">
@@ -11,43 +33,7 @@ export default function Cart({ cart, shoes, removeFromCart }) {
       <p>
         <Link to="/">Continue Shopping</Link>
       </p>
-      {cart.length > 0 && (
-        <table>
-          <thead>
-            <th></th>
-            <th>Price</th>
-            <th>Size</th>
-            <th>Quantity</th>
-            <th>Total</th>
-          </thead>
-          <tbody>
-            {cart.map((shoeInCart) => {
-              const shoe = shoes.find((s) => s.id === shoeInCart.id);
-              return (
-                <tr>
-                  <td>
-                    <button
-                      className="btn btn-link"
-                      onClick={() => removeFromCart(shoe.id)}
-                    >
-                      Remove
-                    </button>
-                    <img src={`/images/shoe${shoe.id}.jpg`} alt="shoe" />
-                  </td>
-                  <td>${shoe.price}</td>
-                  <td>{shoeInCart.size}</td>
-                  <td>
-                    <input type="number" onChange={setQuantity} />
-                  </td>
-                  <td>
-                    <strong>${shoe.price * 1}</strong>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+      {cart.map(renderItem)}
     </section>
   );
 }
