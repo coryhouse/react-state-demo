@@ -748,7 +748,7 @@ footer .crf-footer--copyright {
 }
 
 #cart img {
-  width: 150px;
+  height: 150px;
 }
 
 #cart td,
@@ -763,4 +763,8 @@ input[type="number"] {
 
 main {
   padding: 20px;
+}
+
+.cart-item {
+  display: flex;
 }
