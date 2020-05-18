@@ -29,7 +29,7 @@ function App() {
   }, []);
 
   function addToCart(id, size) {
-    if (isNaN(size)) throw new Error("Size must be a number");
+    if (!Number.isInteger(size)) throw new Error("Size must be a number");
     setCart((cart) => {
       const alreadyInCart = cart.find((s) => s.id === id && s.size === size);
       const newCart = alreadyInCart
@@ -47,8 +47,9 @@ function App() {
 
   // TODO show using Immer
   function handleCartQuantityChange(id, size, quantity) {
-    if (isNaN(size)) throw new Error("Size must be a number");
-    if (isNaN(quantity)) throw new Error("Quantity must be a number");
+    if (!Number.isInteger(size)) throw new Error("Size must be a number");
+    if (!Number.isInteger(quantity))
+      throw new Error("Quantity must be a number");
     setCart((cart) => {
       const newCart =
         quantity === 0
