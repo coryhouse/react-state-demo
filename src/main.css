@@ -767,4 +767,5 @@ main {
 
 .cart-item {
   display: flex;
+  margin-bottom: 20px;
 }
