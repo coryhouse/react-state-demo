@@ -42,12 +42,15 @@ function App() {
     history.push("/cart");
   }
 
+  // TODO show using Immer
   function handleCartQuantityChange(id, size, quantity) {
     setCart((cart) => {
       const newCart =
         quantity === 0
-          ? cart.filter((c) => c.id !== id)
-          : cart.map((c) => (c.id === id ? { ...c, quantity } : c));
+          ? cart.filter((c) => c.size === size && c.id === id)
+          : cart.map((c) =>
+              c.id === id && c.size === size ? { ...c, quantity } : c
+            );
       localStorage.setItem("cart", JSON.stringify(newCart));
       return newCart;
     });
