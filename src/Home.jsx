@@ -25,7 +25,7 @@ export default function Home({ shoes }) {
       <section id="shoes">
         {filteredShoes.length === 0 && "No shoes found."}
         {filteredShoes.map((shoe) => (
-          <div className="shoe">
+          <div key={shoe.id} className="shoe">
             <Link to={`/shoe/${shoe.id}`}>
               <img src={`images/shoe${shoe.id}.jpg`} alt="shoe" />
               <h3>{shoe.name}</h3>
