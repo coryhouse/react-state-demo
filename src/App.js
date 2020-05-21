@@ -7,6 +7,7 @@ import { Route, useHistory } from "react-router-dom";
 import ShoeDetail from "./ShoeDetail";
 import { getShoes } from "./services/shoeApi";
 import Cart from "./Cart";
+import Checkout from "./Checkout";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -83,6 +84,10 @@ function App() {
             shoes={shoes}
             onQuantityChange={handleCartQuantityChange}
           />
+        </Route>
+
+        <Route path="/checkout">
+          <Checkout />
         </Route>
       </main>
 
