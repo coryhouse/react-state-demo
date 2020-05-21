@@ -8,6 +8,7 @@ import ShoeDetail from "./ShoeDetail";
 import { getShoes } from "./services/shoeApi";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
+import Confirmation from "./Confirmation";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -88,6 +89,10 @@ function App() {
 
         <Route path="/checkout">
           <Checkout />
+        </Route>
+
+        <Route path="/confirmation">
+          <Confirmation />
         </Route>
       </main>
 
