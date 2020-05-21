@@ -3,7 +3,7 @@ import { useRouteMatch, Link } from "react-router-dom";
 import SelectSize from "./SelectSize";
 
 export default function ShoeDetail({ shoes, cart, addToCart }) {
-  const [size, setSize] = useState(null);
+  const [size, setSize] = useState("");
   const { params } = useRouteMatch();
   const shoe = shoes.find((shoe) => shoe.id === parseInt(params["id"]));
 
@@ -35,7 +35,11 @@ export default function ShoeDetail({ shoes, cart, addToCart }) {
       <p>
         <Link to="/">Go Back</Link>
       </p>
-      <img src={`/images/shoe${shoe.id}.jpg`} alt="shoe" />
+      <img
+        style={{ maxHeight: 400 }}
+        src={`/images/shoe${shoe.id}.jpg`}
+        alt="shoe"
+      />
     </>
   );
 }
