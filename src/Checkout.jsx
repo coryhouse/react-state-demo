@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 // Declare static data outside the component to avoid needless recreation on each render.
 // Challenge: Finish building out the checkout with credit card, billing address, totals.
@@ -15,6 +16,7 @@ const STATUS = {
 };
 
 export default function Checkout() {
+  const history = useHistory();
   // Point: When to split vs unify.
   // Tradeoff: unifying makes it easier to send to server, but slightly more work to update.
   const [shippingAddress, setShippingAddress] = useState(newAddress);
