@@ -16,11 +16,11 @@ const STATUS = {
   SUBMITTED: "SUBMITTED",
 };
 
-export default function Checkout() {
+export default function Checkout({ emptyCart }) {
   const history = useHistory();
-  // Point: When to split vs unify.
+  // Point: When to split vs unify state.
   // Tradeoff: unifying makes it easier to send to server, but slightly more work to update.
-  const [shippingAddress, setShippingAddress] = useState(newAddress);
+  const [address, setAddress] = useState(newAddress);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(STATUS.IDLE);
 
@@ -29,9 +29,12 @@ export default function Checkout() {
     e.persist();
     if (status === STATUS.IDLE) setStatus(STATUS.DIRTY);
     // Using callback form of setter here since we need the existing state
-    setShippingAddress((curAddress) => {
+    setAddress((curAddress) => {
       // Note that we're storing the new data here and passing to validate. Otherwise, validate would use stale data since setting state is async.
-      const updatedAddress = { ...curAddress, [e.target.id]: e.target.value };
+      const updatedAddress = {
+        ...curAddress,
+        [e.target.id]: e.target.value,
+      };
       if (status === STATUS.SUBMITTED) validate(updatedAddress);
       return updatedAddress;
     });
@@ -47,11 +50,14 @@ export default function Checkout() {
     return Object.keys(_errors).length === 0;
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const isValid = validate(shippingAddress);
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const isValid = validate(address);
     if (isValid) {
       setStatus(STATUS.SUBMITTING);
+      await saveShipping(address);
+      emptyCart();
+      history.push("/confirmation");
     } else {
       setStatus(STATUS.SUBMITTED);
     }
@@ -76,7 +82,7 @@ export default function Checkout() {
           <input
             id="city"
             type="text"
-            value={shippingAddress.city}
+            value={address.city}
             onChange={handleChange}
           />
         </div>
@@ -84,11 +90,7 @@ export default function Checkout() {
         <div>
           <label htmlFor="country">Country</label>
           <br />
-          <select
-            id="country"
-            value={shippingAddress.country}
-            onChange={handleChange}
-          >
+          <select id="country" value={address.country} onChange={handleChange}>
             <option>Select Country</option>
             <option value="China">China</option>
             <option value="India">India</option>
@@ -102,7 +104,7 @@ export default function Checkout() {
             type="submit"
             className="btn btn-primary"
             value="Save Shipping Info"
-            disabled={errorsExist}
+            disabled={errorsExist || status === STATUS.SUBMITTING}
           />
         </div>
       </form>
