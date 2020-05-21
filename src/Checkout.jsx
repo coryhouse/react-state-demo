@@ -12,7 +12,6 @@ const STATUS = {
   DIRTY: "DIRTY",
   SUBMITTING: "SUBMITTING",
   SUBMITTED: "SUBMITTED",
-  ERROR: "ERROR",
 };
 
 export default function Checkout() {
