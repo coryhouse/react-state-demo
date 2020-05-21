@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export default function Cart({ cart, shoes, onQuantityChange }) {
+  const history = useHistory();
+
   function renderItem(shoeInCart) {
     const { price, id, name } = shoes.find((s) => s.id === shoeInCart.id);
     return (
@@ -49,6 +51,12 @@ export default function Cart({ cart, shoes, onQuantityChange }) {
         <Link to="/">Continue Shopping</Link>
       </p>
       {cart.map(renderItem)}
+      <button
+        className="btn btn-primary"
+        onClick={() => history.push("/checkout")}
+      >
+        Checkout
+      </button>
     </section>
   );
 }
