@@ -64,6 +64,11 @@ function App() {
     });
   }
 
+  function emptyCart() {
+    setCart([]);
+    localStorage.removeItem("cart");
+  }
+
   if (status === STATUS.LOADING) return "Loading...";
 
   return (
@@ -88,7 +93,7 @@ function App() {
         </Route>
 
         <Route path="/checkout">
-          <Checkout />
+          <Checkout emptyCart={emptyCart} />
         </Route>
 
         <Route path="/confirmation">
