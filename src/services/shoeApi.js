@@ -26,3 +26,14 @@ export async function getShoes() {
     },
   ];
 }
+
+export async function saveShipping(shippingInfo) {
+  return await setTimeout(() => {
+    console.log("saving shipping info", shippingInfo);
+    return new Promise((resolve) => {
+      resolve({
+        statusCode: 200,
+      });
+    });
+  }, 2000);
+}
