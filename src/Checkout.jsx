@@ -11,6 +11,7 @@ const STATUS = {
   IDLE: "IDLE",
   DIRTY: "DIRTY",
   SUBMITTING: "SUBMITTING",
+  SUBMITTED: "SUBMITTED",
   ERROR: "ERROR",
 };
 
@@ -24,17 +25,21 @@ export default function Checkout() {
   // Show controlled vs uncontrolled form.
   function handleChange(e) {
     e.persist();
-    setStatus(STATUS.DIRTY);
+    if (status === STATUS.IDLE) setStatus(STATUS.DIRTY);
+    // Using callback form of setter here since we need the existing state
     setShippingAddress((curAddress) => {
-      return { ...curAddress, [e.target.id]: e.target.value };
+      // Note that we're storing the new data here and passing to validate. Otherwise, validate would use stale data since setting state is async.
+      const updatedAddress = { ...curAddress, [e.target.id]: e.target.value };
+      if (status === STATUS.SUBMITTED) validate(updatedAddress);
+      return updatedAddress;
     });
   }
 
   // Returns true if the form is valid
-  function validate() {
+  function validate(address) {
     const _errors = {};
-    if (!shippingAddress.city) _errors.city = "City is required.";
-    if (!shippingAddress.country) _errors.country = "Country is required.";
+    if (!address.city) _errors.city = "City is required.";
+    if (!address.country) _errors.country = "Country is required.";
     setErrors(_errors);
     // Note that if I read from state after calling this, it won't work because set state is async.
     return Object.keys(_errors).length === 0;
@@ -42,9 +47,11 @@ export default function Checkout() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const isValid = validate();
+    const isValid = validate(shippingAddress);
     if (isValid) {
       setStatus(STATUS.SUBMITTING);
+    } else {
+      setStatus(STATUS.SUBMITTED);
     }
   }
 
