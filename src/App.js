@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./main.css";
 import Footer from "./Footer";
 import Nav from "./Nav";
-import Home from "./Home";
+import Shoes from "./Shoes";
 import { Route, useHistory } from "react-router-dom";
 import ShoeDetail from "./ShoeDetail";
 import { getShoes } from "./services/shoeApi";
@@ -77,7 +77,7 @@ function App() {
 
       <main>
         <Route path="/" exact>
-          <Home shoes={shoes} />
+          <Shoes shoes={shoes} />
         </Route>
 
         <Route path="/shoe/:id">
