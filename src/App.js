@@ -24,8 +24,8 @@ function App() {
   );
 
   useEffect(() => {
-    getShoes().then((response) => {
-      setShoes(response);
+    getShoes().then((shoes) => {
+      setShoes(shoes);
       setStatus(STATUS.IDLE);
     });
   }, []);
