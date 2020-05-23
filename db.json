@@ -24,5 +24,12 @@
       "sizes": [7, 8, 9],
       "description": "Look stylish while stomping in the mud."
     }
+  ],
+  "shippingAddress": [
+    {
+      "id": 1,
+      "city": "",
+      "country": ""
+    }
   ]
 }
