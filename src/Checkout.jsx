@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { saveShipping } from "./services/shoeApi";
+import { saveShippingAddress } from "./services/shoeApi";
 
 // Declare static data outside the component to avoid needless recreation on each render.
 // Challenge: Finish building out the checkout with credit card, billing address, totals.
@@ -54,7 +54,7 @@ export default function Checkout({ emptyCart }) {
     event.preventDefault();
     if (isValid) {
       setStatus(STATUS.SUBMITTING);
-      await saveShipping(address);
+      await saveShippingAddress(address);
       emptyCart();
       history.push("/confirmation");
     } else {
