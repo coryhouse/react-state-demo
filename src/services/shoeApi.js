@@ -6,6 +6,12 @@ export async function getShoes() {
   });
 }
 
+export async function getShoe(key, shoeId) {
+  return fetch(baseUrl + "shoes/" + shoeId).then((response) => {
+    if (response.ok) return response.json();
+  });
+}
+
 export async function saveShippingAddress(address) {
   return fetch(baseUrl + "shippingAddress", {
     method: "POST",
