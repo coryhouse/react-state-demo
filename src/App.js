@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./main.css";
 import Footer from "./Footer";
 import Nav from "./Nav";
@@ -9,26 +9,15 @@ import { getShoes } from "./services/shoeApi";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
-
-const STATUS = {
-  LOADING: "LOADING",
-  IDLE: "IDLE",
-};
+import { useQuery } from "react-query";
 
 function App() {
   const history = useHistory();
-  const [status, setStatus] = useState(STATUS.LOADING);
-  const [shoes, setShoes] = useState([]);
   const [cart, setCart] = useState(
     JSON.parse(localStorage.getItem("cart")) ?? []
   );
 
-  useEffect(() => {
-    getShoes().then((shoes) => {
-      setShoes(shoes);
-      setStatus(STATUS.IDLE);
-    });
-  }, []);
+  const { status, data: shoes, error } = useQuery("shoes", getShoes);
 
   function addToCart(id, size) {
     if (!Number.isInteger(size)) throw new Error("Size must be a number");
@@ -69,8 +58,10 @@ function App() {
     localStorage.removeItem("cart");
   }
 
-  if (status === STATUS.LOADING) return "Loading...";
+  if (status === "loading") return "Loading...";
+  if (status === "error") throw error;
 
+  // If we got this far, status is success.
   return (
     <div className="crf">
       <Nav cart={cart} />
@@ -81,7 +72,7 @@ function App() {
         </Route>
 
         <Route path="/shoe/:id">
-          <ShoeDetail cart={cart} shoes={shoes} addToCart={addToCart} />
+          <ShoeDetail cart={cart} addToCart={addToCart} />
         </Route>
 
         <Route path="/cart">
