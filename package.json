@@ -6,10 +6,14 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@xstate/react": "^0.8.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-query": "^1.5.2",
+    "react-query-devtools": "^1.1.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "xstate": "^4.10.0"
   },
   "scripts": {
     "start": "run-p start-app start-api",
