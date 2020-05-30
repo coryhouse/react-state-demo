@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./main.css";
 import Footer from "./Footer";
-import Nav from "./Nav";
+import Header from "./Header";
 import Shoes from "./Shoes";
 import { Route, useHistory } from "react-router-dom";
 import ShoeDetail from "./ShoeDetail";
@@ -73,7 +73,7 @@ function App() {
 
   return (
     <div className="crf">
-      <Nav cart={cart} />
+      <Header cart={cart} />
 
       <main>
         <Route path="/" exact>
