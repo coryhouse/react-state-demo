@@ -13,19 +13,6 @@ export default function Nav({ cart }) {
                 src="https://www.pluralsight.com/content/dam/pluralsight2/teach/author-tools/carved-rock-fitness/logos/carved-rock-logo.png"
               />
             </Link>{" "}
-            <button
-              aria-controls="navbarNav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              className="navbar-toggle"
-              data-target="#navbarNav"
-              data-toggle="collapse"
-              type="button"
-            >
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-            </button>
           </div>
           <div
             className="collapse navbar-collapse justify-content-center align-items-center"
