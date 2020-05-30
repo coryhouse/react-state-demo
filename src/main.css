@@ -1,5 +1,20 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
 header {
   display: flex;
+  padding-left: 20px;
 }
 
 header img {
@@ -9,10 +24,8 @@ header img {
 footer {
   text-align: center;
   color: gray;
-  position: fixed;
-  padding-top: 20px;
-  left: 0;
-  bottom: 0;
+  padding: 20px;
+  flex-shrink: 0;
   width: 100%;
   background-color: gainsboro;
 }
