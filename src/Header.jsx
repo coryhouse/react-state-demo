@@ -12,9 +12,9 @@ export default function Header({ cart }) {
           <li>
             <NavLink to="/">Footwear</NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/bags">Bags</NavLink>
-          </li>
+          </li> */}
           <li>
             <Link to="/cart">View Cart ({cart.length})</Link>
           </li>
