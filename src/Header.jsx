@@ -13,10 +13,12 @@ export default function Header({ cart }) {
             <NavLink to="/">Footwear</NavLink>
           </li>
           <li>
-            <NavLink to="/">Bags &amp; Travel</NavLink>
+            <NavLink to="/bags">Bags &amp; Travel</NavLink>
+          </li>
+          <li>
+            <Link to="/cart">View Cart ({cart.length})</Link>
           </li>
         </ul>
-        <Link to="/cart">View Cart ({cart.length})</Link>
       </nav>
     </header>
   );
