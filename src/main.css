@@ -30,6 +30,11 @@ header img {
   max-height: 100px;
 }
 
+nav {
+  display: flex;
+  align-items: center;
+}
+
 footer {
   text-align: center;
   color: gray;
@@ -39,7 +44,7 @@ footer {
 }
 
 header ul {
-  padding-inline-start: 0;
+  padding-inline-start: 20px;
 }
 
 header li {
