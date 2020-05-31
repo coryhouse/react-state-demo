@@ -89,7 +89,7 @@ export default function Checkout({ emptyCart }) {
           />
         </div>
 
-        <p>{touched.city && errors.city}</p>
+        <p>{(touched.city || status === STATUS.SUBMITTED) && errors.city}</p>
 
         <div>
           <label htmlFor="country">Country</label>
@@ -108,7 +108,9 @@ export default function Checkout({ emptyCart }) {
           </select>
         </div>
 
-        <p>{touched.country && errors.country}</p>
+        <p>
+          {(touched.country || status === STATUS.SUBMITTED) && errors.country}
+        </p>
 
         <div>
           <input
