@@ -6,6 +6,8 @@ body {
   font-family: open sans, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
+  margin: 0;
+  padding: 0;
   color: #364147;
   background-color: #fff;
 }
@@ -38,7 +40,7 @@ nav {
 footer {
   text-align: center;
   color: gray;
-  padding: 20px;
+  padding: 20px 0 20px 0;
   flex-shrink: 0;
   background-color: gainsboro;
 }
