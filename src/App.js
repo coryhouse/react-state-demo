@@ -72,37 +72,38 @@ function App() {
   if (status === STATUS.LOADING) return "Loading...";
 
   return (
-    <div className="crf">
-      <Header cart={cart} />
+    <>
+      <div className="content">
+        <Header cart={cart} />
 
-      <main>
-        <Route path="/" exact>
-          <Shoes shoes={shoes} />
-        </Route>
+        <main>
+          <Route path="/" exact>
+            <Shoes shoes={shoes} />
+          </Route>
 
-        <Route path="/shoe/:id">
-          <ShoeDetail cart={cart} shoes={shoes} addToCart={addToCart} />
-        </Route>
+          <Route path="/shoe/:id">
+            <ShoeDetail cart={cart} shoes={shoes} addToCart={addToCart} />
+          </Route>
 
-        <Route path="/cart">
-          <Cart
-            cart={cart}
-            shoes={shoes}
-            onQuantityChange={handleCartQuantityChange}
-          />
-        </Route>
+          <Route path="/cart">
+            <Cart
+              cart={cart}
+              shoes={shoes}
+              onQuantityChange={handleCartQuantityChange}
+            />
+          </Route>
 
-        <Route path="/checkout">
-          <Checkout emptyCart={emptyCart} />
-        </Route>
+          <Route path="/checkout">
+            <Checkout emptyCart={emptyCart} />
+          </Route>
 
-        <Route path="/confirmation">
-          <Confirmation />
-        </Route>
-      </main>
-
+          <Route path="/confirmation">
+            <Confirmation />
+          </Route>
+        </main>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
 
