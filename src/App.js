@@ -31,42 +31,31 @@ function App() {
   }, []);
 
   function addToCart(id, size) {
-    if (!Number.isInteger(size)) throw new Error("Size must be a number");
-    setCart((cart) => {
-      const alreadyInCart = cart.find((s) => s.id === id && s.size === size);
-      const newCart = alreadyInCart
-        ? cart.map((c) =>
-            c.id === id && c.size === size
-              ? { ...c, quantity: parseInt(c.quantity) + 1 }
-              : c
-          )
-        : [...cart, { id, size, quantity: 1 }];
-      localStorage.setItem("cart", JSON.stringify(newCart));
-      return newCart;
-    });
+    updateCart(id, size, 1);
     history.push("/cart");
   }
 
   // TODO show using Immer
-  function handleCartQuantityChange(id, size, quantity) {
+  function updateCart(id, size, quantity) {
     if (!Number.isInteger(size)) throw new Error("Size must be a number");
     if (!Number.isInteger(quantity))
       throw new Error("Quantity must be a number");
     setCart((cart) => {
-      const newCart =
-        quantity === 0
-          ? cart.filter((c) => c.size !== size && c.id !== id)
-          : cart.map((c) =>
+      if (quantity === 0) {
+        return cart.filter((c) => c.id !== id);
+      } else {
+        const alreadyInCart = cart.find((s) => s.id === id && s.size === size);
+        return alreadyInCart
+          ? cart.map((c) =>
               c.id === id && c.size === size ? { ...c, quantity } : c
-            );
-      localStorage.setItem("cart", JSON.stringify(newCart));
-      return newCart;
+            )
+          : [...cart, { id, size, quantity }];
+      }
     });
   }
 
   function emptyCart() {
     setCart([]);
-    localStorage.removeItem("cart");
   }
 
   if (status === STATUS.LOADING) return "Loading...";
@@ -86,11 +75,7 @@ function App() {
           </Route>
 
           <Route path="/cart">
-            <Cart
-              cart={cart}
-              shoes={shoes}
-              onQuantityChange={handleCartQuantityChange}
-            />
+            <Cart cart={cart} shoes={shoes} updateCart={updateCart} />
           </Route>
 
           <Route path="/checkout">
