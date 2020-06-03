@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-export default function Cart({ cart, shoes, onQuantityChange }) {
+export default function Cart({ cart, shoes, updateCart }) {
   const history = useHistory();
 
   function renderItem(shoeInCart) {
@@ -16,7 +16,7 @@ export default function Cart({ cart, shoes, onQuantityChange }) {
           <p>
             <select
               onChange={(e) =>
-                onQuantityChange(id, shoeInCart.size, parseInt(e.target.value))
+                updateCart(id, shoeInCart.size, parseInt(e.target.value))
               }
               value={shoeInCart.quantity}
             >
