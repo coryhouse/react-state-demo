@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SelectSize from "./SelectSize";
 
 export default function Home({ shoes }) {
-  const [size, setSize] = useState(localStorage.getItem("shoe-size"));
+  const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
 
   const filteredShoes = size
     ? shoes.filter((shoe) => shoe.sizes.some((s) => s === parseInt(size)))
