@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useRouteMatch, Link } from "react-router-dom";
+import { useRouteMatch, Link, useHistory } from "react-router-dom";
 import SelectSize from "./SelectSize";
 
-export default function ShoeDetail({ shoes, cart, addToCart }) {
+export default function ShoeDetail({ shoes, cart, dispatch }) {
   const [size, setSize] = useState("");
+  const history = useHistory();
   const { params } = useRouteMatch();
   const shoe = shoes.find((shoe) => shoe.id === parseInt(params["id"]));
 
@@ -26,7 +27,14 @@ export default function ShoeDetail({ shoes, cart, addToCart }) {
           <button
             className="btn btn-primary"
             disabled={!size}
-            onClick={() => addToCart(shoe.id, parseInt(size))}
+            onClick={() => {
+              dispatch({
+                type: "add",
+                id: shoe.id,
+                size: parseInt(size),
+              });
+              history.push("/cart");
+            }}
           >
             Add to cart
           </button>
