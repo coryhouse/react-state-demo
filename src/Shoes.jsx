@@ -21,6 +21,7 @@ export default function Home({ shoes }) {
           value={size}
           defaultOptionLabel="All Sizes"
         />
+        {size && <h2>Found {filteredShoes.length} shoes</h2>}
       </section>
       <section id="shoes">
         {filteredShoes.length === 0 && "No shoes found."}
