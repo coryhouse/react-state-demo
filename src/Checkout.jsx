@@ -70,11 +70,14 @@ export default function Checkout({ emptyCart }) {
     <>
       <h1>Shipping Info</h1>
       {!isValid && status === STATUS.SUBMITTED && (
-        <ul>
-          {Object.keys(errors).map((key) => {
-            return <li>{errors[key]}</li>;
-          })}
-        </ul>
+        <>
+          <p>Please fix the following errors:</p>
+          <ul>
+            {Object.keys(errors).map((key) => {
+              return <li>{errors[key]}</li>;
+            })}
+          </ul>
+        </>
       )}
       <form onSubmit={handleSubmit}>
         <div>
