@@ -15,6 +15,7 @@ export default function Cart({ cart, shoes, updateCart }) {
           <p>Size: {shoeInCart.size}</p>
           <p>
             <select
+              aria-label={`Select quantity for ${name} size ${shoeInCart.size}`}
               onChange={(e) =>
                 updateCart(id, shoeInCart.size, parseInt(e.target.value))
               }
