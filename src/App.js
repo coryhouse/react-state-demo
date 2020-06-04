@@ -9,6 +9,7 @@ import { getShoes } from "./services/shoeApi";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
+import produce from "immer";
 
 const STATUS = {
   LOADING: "LOADING",
@@ -36,13 +37,12 @@ function App() {
   function addToCart(id, size) {
     if (!Number.isInteger(size)) throw new Error("Size must be a number");
     setCart((cart) => {
-      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
-      if (alreadyInCart)
-        return cart.map((i) => {
-          const isMatchingItem = i.id === id && i.size === size;
-          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
-        });
-      return [...cart, { id, size, quantity: 1 }];
+      return produce(cart, (draft) => {
+        const itemInCart = draft.find((i) => i.id === id && i.size === size);
+        itemInCart
+          ? (itemInCart.quantity += 1)
+          : draft.push({ id, size, quantity: 1 });
+      });
     });
     history.push("/cart");
   }
