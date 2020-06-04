@@ -34,7 +34,17 @@ function App() {
   }, []);
 
   function addToCart(id, size) {
-    updateCart(id, size, 1);
+    if (!Number.isInteger(size)) throw new Error("Size must be a number");
+    setCart((cart) => {
+      const alreadyInCart = cart.find((s) => s.id === id && s.size === size);
+      return alreadyInCart
+        ? cart.map((c) =>
+            c.id === id && c.size === size
+              ? { ...c, quantity: c.quantity + 1 }
+              : c
+          )
+        : [...cart, { id, size, quantity: 1 }];
+    });
     history.push("/cart");
   }
 
@@ -44,21 +54,12 @@ function App() {
     if (!Number.isInteger(quantity))
       throw new Error("Quantity must be a number");
     setCart((cart) => {
-      if (quantity === 0) {
-        return cart.filter((c) => c.id !== id);
-      } else {
-        const alreadyInCart = cart.find((s) => s.id === id && s.size === size);
-        return alreadyInCart
-          ? cart.map((c) =>
-              c.id === id && c.size === size ? { ...c, quantity } : c
-            )
-          : [...cart, { id, size, quantity }];
-      }
+      return quantity === 0
+        ? cart.filter((c) => c.id !== id)
+        : cart.map((c) =>
+            c.id === id && c.size === size ? { ...c, quantity } : c
+          );
     });
-  }
-
-  function emptyCart() {
-    setCart([]);
   }
 
   if (status === STATUS.LOADING) return "Loading...";
@@ -82,7 +83,7 @@ function App() {
           </Route>
 
           <Route path="/checkout">
-            <Checkout emptyCart={emptyCart} />
+            <Checkout setCart={setCart} />
           </Route>
 
           <Route path="/confirmation">
