@@ -15,7 +15,7 @@ const STATUS = {
   SUBMITTING: "SUBMITTING",
 };
 
-export default function Checkout({ setCart }) {
+export default function Checkout({ emptyCart }) {
   const history = useHistory();
   // Point: When to split vs unify state.
   // Tradeoff: unifying makes it easier to send to server, but slightly more work to update.
@@ -55,7 +55,7 @@ export default function Checkout({ setCart }) {
     if (isValid) {
       setStatus(STATUS.SUBMITTING);
       await saveShippingAddress(address);
-      setCart([]);
+      emptyCart();
       history.push("/confirmation");
     } else {
       setStatus(STATUS.SUBMITTED);

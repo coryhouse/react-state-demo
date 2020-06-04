@@ -83,7 +83,7 @@ function App() {
           </Route>
 
           <Route path="/checkout">
-            <Checkout setCart={setCart} />
+            <Checkout emptyCart={() => setCart([])} />
           </Route>
 
           <Route path="/confirmation">
