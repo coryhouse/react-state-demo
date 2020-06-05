@@ -17,13 +17,22 @@ const STATUS = {
 
 function App() {
   const history = useHistory();
+  // Note, can call React.useState if you prefer
+  // Build up state slowly. Start with const statusState = useState(); Then destructure just first element in array. Then 2nd.
   const [status, setStatus] = useState(STATUS.LOADING);
   const [shoes, setShoes] = useState([]);
-  const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) ?? []
-  );
+  // Pass func so it's only called once. (even though the initial value is only used on the first render, the function which initializes it still gets called))
+  //https://stackoverflow.com/questions/58539813/lazy-initial-state-where-to-use-it
+  // and https://dmitripavlutin.com/react-usestate-hook-guide/#3-lazy-initialization-of-state
+  const [cart, setCart] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("cart"));
+    } catch {
+      return [];
+    }
+  });
 
-  // Persist cart to localstorage when it changes
+  // Persist cart in localStorage
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   useEffect(() => {
@@ -35,6 +44,17 @@ function App() {
 
   function addToCart(id, size) {
     if (!Number.isInteger(size)) throw new Error("Size must be a number");
+
+    // Other callback form examples:
+
+    // Toggle a boolean
+    // const [toggled, setToggled] = useState(false);
+    // setToggled((toggled) => !toggled);
+
+    // Increase a counter
+    // const [count, setCount] = useState(0);
+    // setCount((count) => count + 1);
+
     setCart((cart) => {
       const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
       if (alreadyInCart)
