@@ -53,7 +53,12 @@ function App() {
     if (!Number.isInteger(quantity))
       throw new Error("Quantity must be a number");
     setCart((cart) => {
-      if (quantity === 0) return cart.filter((i) => i.id !== id);
+      if (quantity === 0) {
+        // Keep items that have a different id, or have the same id, but a different size
+        return cart.filter(
+          (i) => i.id !== id || (i.id === id && i.size !== size)
+        );
+      }
       return cart.map((i) =>
         i.id === id && i.size === size ? { ...i, quantity } : i
       );
