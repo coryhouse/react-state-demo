@@ -41,13 +41,11 @@ export default function Cart({ cart, shoes, updateCart }) {
 
   return (
     <section id="cart">
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <h1>
-          {totalQuantity} Item{totalQuantity > 1 && "s"} in My Cart
-        </h1>
-      )}
+      <h1>
+        {cart.length === 0
+          ? "Your cart is empty."
+          : `${totalQuantity} Item${totalQuantity > 1 ? "s" : ""} in My Cart`}
+      </h1>
       <p>
         <Link to="/">Continue Shopping</Link>
       </p>
