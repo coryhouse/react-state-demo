@@ -50,12 +50,14 @@ export default function Cart({ cart, shoes, updateCart }) {
         <Link to="/">Continue Shopping</Link>
       </p>
       {cart.map(renderItem)}
-      <button
-        className="btn btn-primary"
-        onClick={() => history.push("/checkout")}
-      >
-        Checkout
-      </button>
+      {cart.length > 0 && (
+        <button
+          className="btn btn-primary"
+          onClick={() => history.push("/checkout")}
+        >
+          Checkout
+        </button>
+      )}
     </section>
   );
 }
