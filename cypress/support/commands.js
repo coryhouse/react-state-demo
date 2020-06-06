@@ -24,3 +24,10 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import "@testing-library/cypress/add-commands";
+
+Cypress.Commands.add("addToCart", (id, size) => {
+  cy.visit("/shoe/" + id);
+  cy.findByRole("button", { name: "Add to cart" }).should("be.disabled");
+  cy.findByLabelText("Select size").select(size);
+  cy.findByRole("button", { name: "Add to cart" }).click();
+});
