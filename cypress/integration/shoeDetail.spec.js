@@ -2,7 +2,7 @@
 
 context("ShoeDetail", () => {
   it("should support adding to cart after size is selected, then removing from cart", () => {
-    cy.addToCart(1, "7");
+    cy.addToCart(1, 7);
     cy.findByRole("heading", { name: "1 Item in My Cart" });
 
     // Now, change quantity
@@ -19,11 +19,11 @@ context("ShoeDetail", () => {
   });
 
   it("should increment the quantity in the cart when 'Add to cart' is clicked and the shoe is in the cart", () => {
-    cy.addToCart(2, "8");
+    cy.addToCart(2, 8);
     cy.findByRole("heading", { name: "1 Item in My Cart" });
     cy.findByText("Continue Shopping").click();
     cy.findByText("Climber").click();
-    cy.addToCart(2, "8");
+    cy.addToCart(2, 8);
     cy.findByRole("heading", { name: "2 Items in My Cart" });
     cy.findByRole("combobox", {
       name: "Select quantity for Climber size 8",
@@ -31,11 +31,11 @@ context("ShoeDetail", () => {
   });
 
   it("should support adding the same shoe to the cart in different sizes, changing the quantity of each separately, and then support removing only one size of the same shoe", () => {
-    cy.addToCart(3, "7");
+    cy.addToCart(3, 7);
     cy.findByRole("heading", { name: "1 Item in My Cart" });
     cy.findByText("Continue Shopping").click();
     cy.findByText("Explorer").click();
-    cy.addToCart(3, "8");
+    cy.addToCart(3, 8);
     cy.findByRole("heading", { name: "2 Items in My Cart" });
     cy.findByRole("combobox", {
       name: "Select quantity for Explorer size 7",
