@@ -7,6 +7,6 @@ declare namespace Cypress {
      * @example
      * cy.addToCart(id, size)
      */
-    addToCart(id: number, size: string): Chainable<any>;
+    addToCart(id: number, size: number): Chainable<any>;
   }
 }
