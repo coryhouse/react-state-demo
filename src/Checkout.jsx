@@ -70,14 +70,14 @@ export default function Checkout({ emptyCart }) {
     <>
       <h1>Shipping Info</h1>
       {!isValid && status === STATUS.SUBMITTED && (
-        <>
+        <div role="alert">
           <p>Please fix the following errors:</p>
           <ul>
             {Object.keys(errors).map((key) => {
-              return <li>{errors[key]}</li>;
+              return <li key={key}>{errors[key]}</li>;
             })}
           </ul>
-        </>
+        </div>
       )}
       <form onSubmit={handleSubmit}>
         <div>
@@ -90,9 +90,11 @@ export default function Checkout({ emptyCart }) {
             value={address.city}
             onChange={handleChange}
           />
-        </div>
 
-        <p>{(touched.city || status === STATUS.SUBMITTED) && errors.city}</p>
+          {(touched.city || status === STATUS.SUBMITTED) && errors.city && (
+            <p role="alert">{errors.city}</p>
+          )}
+        </div>
 
         <div>
           <label htmlFor="country">Country</label>
@@ -109,11 +111,10 @@ export default function Checkout({ emptyCart }) {
             <option value="United Kingodom">United Kingdom</option>
             <option value="USA">USA</option>
           </select>
-        </div>
 
-        <p>
-          {(touched.country || status === STATUS.SUBMITTED) && errors.country}
-        </p>
+          {(touched.country || status === STATUS.SUBMITTED) &&
+            errors.country && <p role="alert">{errors.country}</p>}
+        </div>
 
         <div>
           <input
