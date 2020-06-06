@@ -2,7 +2,7 @@
 
 context("Checkout", () => {
   it("should validate and support checkout", () => {
-    cy.addToCart(1, "7");
+    cy.addToCart(1, 7);
     cy.findByRole("button", { name: "Checkout" }).click();
     cy.findByLabelText("City").focus().blur();
     cy.findByText("City is required.");

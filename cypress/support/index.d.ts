@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
-// As mentioned here: https://docs.cypress.io/api/cypress-api/custom-commands.html#5-Write-TypeScript-definitions
+
 declare namespace Cypress {
+  // As mentioned here: https://docs.cypress.io/api/cypress-api/custom-commands.html#5-Write-TypeScript-definitions
   interface Chainable<Subject> {
     /**
      * Add a shoe to the cart
