@@ -6,7 +6,12 @@ export default function SelectSize({
   defaultOptionLabel = "",
 }) {
   return (
-    <select id="size" value={value} onChange={onChange}>
+    <select
+      id="size"
+      aria-label="Select size"
+      value={value}
+      onChange={onChange}
+    >
       <option value="">{defaultOptionLabel}</option>
       {[7, 8, 9].map((size) => (
         <option key={size} value={size}>

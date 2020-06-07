@@ -19,8 +19,9 @@ export default function Home({ shoes }) {
             localStorage.setItem("shoe-size", e.target.value);
           }}
           value={size}
-          defaultOptionLabel="All Sizes"
+          defaultOptionLabel="All sizes"
         />
+        {size && <h2>Found {filteredShoes.length} shoes</h2>}
       </section>
       <section id="shoes">
         {filteredShoes.length === 0 && "No shoes found."}

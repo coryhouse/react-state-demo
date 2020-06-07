@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer } from "react";
-import "./main.css";
+import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Shoes from "./Shoes";

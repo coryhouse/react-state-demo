@@ -23,6 +23,7 @@ export default function Cart({ cart, shoes, dispatch }) {
                   quantity: parseInt(e.target.value),
                 });
               }}
+              aria-label={`Select quantity for ${name} size ${shoeInCart.size}`}
               value={shoeInCart.quantity}
             >
               <option value="0">Remove</option>
@@ -45,23 +46,23 @@ export default function Cart({ cart, shoes, dispatch }) {
 
   return (
     <section id="cart">
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <h1>
-          {totalQuantity} Item{totalQuantity > 1 && "s"} in My Cart
-        </h1>
-      )}
+      <h1>
+        {cart.length === 0
+          ? "Your cart is empty."
+          : `${totalQuantity} Item${totalQuantity > 1 ? "s" : ""} in My Cart`}
+      </h1>
       <p>
         <Link to="/">Continue Shopping</Link>
       </p>
       {cart.map(renderItem)}
-      <button
-        className="btn btn-primary"
-        onClick={() => history.push("/checkout")}
-      >
-        Checkout
-      </button>
+      {cart.length > 0 && (
+        <button
+          className="btn btn-primary"
+          onClick={() => history.push("/checkout")}
+        >
+          Checkout
+        </button>
+      )}
     </section>
   );
 }
