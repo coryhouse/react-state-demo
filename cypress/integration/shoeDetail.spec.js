@@ -12,6 +12,12 @@ function checkHead(name) {
   cy.findByRole("heading", { name });
 }
 
+function checkQty(name, size, qty) {
+  cy.findByRole("combobox", {
+    name: `Select quantity for ${name} size ${size}`,
+  }).should("have.value", qty.toString());
+}
+
 context("ShoeDetail", () => {
   it("should support adding to cart after size is selected, then removing from cart", () => {
     cy.addToCart(1, 7);
@@ -33,9 +39,7 @@ context("ShoeDetail", () => {
     cy.findByText("Climber").click();
     cy.addToCart(2, 8);
     checkHead("2 Items in My Cart");
-    cy.findByRole("combobox", {
-      name: "Select quantity for Climber size 8",
-    }).should("have.value", "2");
+    checkQty("Climber", 8, 2);
   });
 
   it("should support adding the same shoe to the cart in different sizes, changing the quantity of each separately, and then support removing only one size of the same shoe", () => {
@@ -45,18 +49,14 @@ context("ShoeDetail", () => {
     cy.findByText("Explorer").click();
     cy.addToCart(3, 8);
     checkHead("2 Items in My Cart");
-    cy.findByRole("combobox", {
-      name: "Select quantity for Explorer size 7",
-    }).should("have.value", "1");
+    checkQty("Explorer", 7, 1);
 
     // Now change the quantity of each separately
     setQty("Explorer", 7, 3);
     setQty("Explorer", 7, 3);
     checkHead("4 Items in My Cart");
     setQty("Explorer", 8, 2);
-    cy.findByRole("combobox", {
-      name: "Select quantity for Explorer size 8",
-    }).should("have.value", "2");
+    checkQty("Explorer", 8, 2);
     checkHead("5 Items in My Cart");
 
     // Now remove just the size 8 shoe
@@ -64,8 +64,6 @@ context("ShoeDetail", () => {
     checkHead("3 Items in My Cart");
 
     // Assure the size 7 shoe's quantity hasn't been effected by removing the size 8 shoe.
-    cy.findByRole("combobox", {
-      name: "Select quantity for Explorer size 7",
-    }).should("have.value", "3");
+    checkQty("Explorer", 7, 3);
   });
 });
