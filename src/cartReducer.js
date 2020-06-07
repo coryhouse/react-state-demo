@@ -1,15 +1,15 @@
-export default function cartReducer(state, action) {
+export default function cartReducer(cart, action) {
   switch (action.type) {
     case "add": {
       const { id, size } = action;
-      const alreadyInCart = state.find((s) => s.id === id && s.size === size);
-      return alreadyInCart
-        ? state.map((c) =>
-            c.id === id && c.size === size
-              ? { ...c, quantity: parseInt(c.quantity) + 1 }
-              : c
-          )
-        : [...state, { id, size, quantity: 1 }];
+
+      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
+      if (alreadyInCart)
+        return cart.map((i) => {
+          const isMatchingItem = i.id === id && i.size === size;
+          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
+        });
+      return [...cart, { id, size, quantity: 1 }];
     }
 
     case "empty":
@@ -17,11 +17,15 @@ export default function cartReducer(state, action) {
 
     case "changeQuantity": {
       const { quantity, size, id } = action;
-      return quantity === 0
-        ? state.filter((c) => c.size !== size && c.id !== id)
-        : state.map((c) =>
-            c.id === id && c.size === size ? { ...c, quantity } : c
-          );
+      if (quantity === 0) {
+        // Keep items that have a different id, or have the same id, but a different size
+        return cart.filter(
+          (i) => i.id !== id || (i.id === id && i.size !== size)
+        );
+      }
+      return cart.map((i) =>
+        i.id === id && i.size === size ? { ...i, quantity } : i
+      );
     }
 
     default:
