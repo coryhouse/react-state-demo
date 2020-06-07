@@ -91,9 +91,9 @@ export default function Checkout({ emptyCart }) {
             onChange={handleChange}
           />
 
-          {(touched.city || status === STATUS.SUBMITTED) && errors.city && (
-            <p role="alert">{errors.city}</p>
-          )}
+          <p role="alert">
+            {(touched.city || status === STATUS.SUBMITTED) && errors.city}
+          </p>
         </div>
 
         <div>
@@ -112,8 +112,9 @@ export default function Checkout({ emptyCart }) {
             <option value="USA">USA</option>
           </select>
 
-          {(touched.country || status === STATUS.SUBMITTED) &&
-            errors.country && <p role="alert">{errors.country}</p>}
+          <p role="alert">
+            {(touched.country || status === STATUS.SUBMITTED) && errors.country}
+          </p>
         </div>
 
         <div>
