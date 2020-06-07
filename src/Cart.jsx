@@ -15,6 +15,7 @@ export default function Cart({ cart, shoes, updateCart }) {
           <p>Size: {shoeInCart.size}</p>
           <p>
             <select
+              aria-label={`Select quantity for ${name} size ${shoeInCart.size}`}
               onChange={(e) =>
                 updateCart(id, shoeInCart.size, parseInt(e.target.value))
               }
@@ -40,23 +41,23 @@ export default function Cart({ cart, shoes, updateCart }) {
 
   return (
     <section id="cart">
-      {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
-      ) : (
-        <h1>
-          {totalQuantity} Item{totalQuantity > 1 && "s"} in My Cart
-        </h1>
-      )}
+      <h1>
+        {cart.length === 0
+          ? "Your cart is empty."
+          : `${totalQuantity} Item${totalQuantity > 1 ? "s" : ""} in My Cart`}
+      </h1>
       <p>
         <Link to="/">Continue Shopping</Link>
       </p>
       {cart.map(renderItem)}
-      <button
-        className="btn btn-primary"
-        onClick={() => history.push("/checkout")}
-      >
-        Checkout
-      </button>
+      {cart.length > 0 && (
+        <button
+          className="btn btn-primary"
+          onClick={() => history.push("/checkout")}
+        >
+          Checkout
+        </button>
+      )}
     </section>
   );
 }

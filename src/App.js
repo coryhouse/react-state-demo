@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./main.css";
+import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Shoes from "./Shoes";
@@ -18,13 +18,23 @@ const STATUS = {
 
 function App() {
   const history = useHistory();
+  // Note, can call React.useState if you prefer
+  // Build up state slowly. Start with const statusState = useState(); Then destructure just first element in array. Then 2nd.
   const [status, setStatus] = useState(STATUS.LOADING);
   const [shoes, setShoes] = useState([]);
-  const [cart, setCart] = useState(
-    JSON.parse(localStorage.getItem("cart")) ?? []
-  );
+  // Pass func so it's only called once. (even though the initial value is only used on the first render, the function which initializes it still gets called))
+  //https://stackoverflow.com/questions/58539813/lazy-initial-state-where-to-use-it
+  // and https://dmitripavlutin.com/react-usestate-hook-guide/#3-lazy-initialization-of-state
+  // Or, can use https://www.npmjs.com/package/@rehooks/local-storage which syncs between tabs
+  const [cart, setCart] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("cart")) ?? [];
+    } catch {
+      return [];
+    }
+  });
 
-  // Persist cart to localstorage when it changes
+  // Persist cart in localStorage
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   useEffect(() => {
@@ -36,6 +46,17 @@ function App() {
 
   function addToCart(id, size) {
     if (!Number.isInteger(size)) throw new Error("Size must be a number");
+
+    // Other callback form examples:
+
+    // Toggle a boolean
+    // const [toggled, setToggled] = useState(false);
+    // setToggled((toggled) => !toggled);
+
+    // Increase a counter
+    // const [count, setCount] = useState(0);
+    // setCount((count) => count + 1);
+
     setCart((cart) => {
       return produce(cart, (draft) => {
         const itemInCart = draft.find((i) => i.id === id && i.size === size);
@@ -53,7 +74,12 @@ function App() {
     if (!Number.isInteger(quantity))
       throw new Error("Quantity must be a number");
     setCart((cart) => {
-      if (quantity === 0) return cart.filter((i) => i.id !== id);
+      if (quantity === 0) {
+        // Keep items that have a different id, or have the same id, but a different size
+        return cart.filter(
+          (i) => i.id !== id || (i.id === id && i.size !== size)
+        );
+      }
       return cart.map((i) =>
         i.id === id && i.size === size ? { ...i, quantity } : i
       );
