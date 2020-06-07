@@ -24,7 +24,7 @@ function App() {
     JSON.parse(localStorage.getItem("cart")) ?? []
   );
 
-  // Persist cart to localstorage
+  // Persist cart to localStorage
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   useEffect(() => {
