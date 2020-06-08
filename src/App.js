@@ -20,7 +20,7 @@ function App() {
   // Note, can call React.useState if you prefer
   // Build up state slowly. Start with const statusState = useState(); Then destructure just first element in array. Then 2nd.
   const [status, setStatus] = useState(STATUS.LOADING);
-  const [shoes, setShoes] = useState([]);
+  const [shoes, setShoes] = useState(new Map());
   // Pass func so it's only called once. (even though the initial value is only used on the first render, the function which initializes it still gets called))
   //https://stackoverflow.com/questions/58539813/lazy-initial-state-where-to-use-it
   // and https://dmitripavlutin.com/react-usestate-hook-guide/#3-lazy-initialization-of-state
@@ -37,8 +37,10 @@ function App() {
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   useEffect(() => {
-    getShoes().then((shoes) => {
-      setShoes(shoes);
+    getShoes().then((shoesResponse) => {
+      const newShoes = new Map();
+      shoesResponse.forEach((s) => newShoes.set(s.id, s));
+      setShoes(newShoes);
       setStatus(STATUS.IDLE);
     });
   }, []);

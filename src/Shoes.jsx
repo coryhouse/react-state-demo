@@ -21,11 +21,11 @@ export default function Home({ shoes }) {
           value={size}
           defaultOptionLabel="All sizes"
         />
-        {size && <h2>Found {filteredShoes.length} shoes</h2>}
+        {size && <h2>Found {filteredShoes.size} shoes</h2>}
       </section>
       <section id="shoes">
-        {filteredShoes.length === 0 && "No shoes found."}
-        {filteredShoes.map((shoe) => (
+        {filteredShoes.size === 0 && "No shoes found."}
+        {Array.from(filteredShoes.values()).map((shoe) => (
           <div key={shoe.id} className="shoe">
             <Link to={`/shoe/${shoe.id}`}>
               <img src={`images/shoe${shoe.id}.jpg`} alt="shoe" />
