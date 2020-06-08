@@ -61,20 +61,12 @@ function App() {
   }
 
   function updateCart(id, size, quantity) {
-    if (!Number.isInteger(size)) throw new Error("Size must be a number");
-    if (!Number.isInteger(quantity))
-      throw new Error("Quantity must be a number");
     setCart((cart) => {
-      if (quantity === 0) {
-        // Keep items that have a different id, or have the same id, but a different size
-        return cart.filter(
-          (i) => i.id !== id || (i.id === id && i.size !== size)
-        );
-      } else {
-        return cart.map((i) =>
-          i.id === id && i.size === size ? { ...i, quantity } : i
-        );
-      }
+      return quantity === 0
+        ? cart.filter((i) => i.id !== id || (i.id === id && i.size !== size))
+        : cart.map((i) =>
+            i.id === id && i.size === size ? { ...i, quantity } : i
+          );
     });
   }
 
