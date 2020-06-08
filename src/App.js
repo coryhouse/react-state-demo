@@ -47,16 +47,6 @@ function App() {
   function addToCart(id, size) {
     if (!Number.isInteger(size)) throw new Error("Size must be a number");
 
-    // Other callback form examples:
-
-    // Toggle a boolean
-    // const [toggled, setToggled] = useState(false);
-    // setToggled((toggled) => !toggled);
-
-    // Increase a counter
-    // const [count, setCount] = useState(0);
-    // setCount((count) => count + 1);
-
     setCart((cart) => {
       return produce(cart, (draft) => {
         const index = draft.findIndex((i) => i.id === id && i.size === size);
