@@ -44,8 +44,6 @@ function App() {
   }, []);
 
   function addToCart(id, size) {
-    if (!Number.isInteger(size)) throw new Error("Size must be a number");
-
     setCart((cart) => {
       const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
       if (alreadyInCart) {
