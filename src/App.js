@@ -48,12 +48,14 @@ function App() {
 
     setCart((cart) => {
       const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
-      if (alreadyInCart)
+      if (alreadyInCart) {
         return cart.map((i) => {
           const isMatchingItem = i.id === id && i.size === size;
           return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
         });
-      return [...cart, { id, size, quantity: 1 }];
+      } else {
+        return [...cart, { id, size, quantity: 1 }];
+      }
     });
     history.push("/cart");
   }
