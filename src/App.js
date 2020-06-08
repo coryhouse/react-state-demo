@@ -59,30 +59,28 @@ function App() {
 
     setCart((cart) => {
       return produce(cart, (draft) => {
-        const itemInCart = draft.find((i) => i.id === id && i.size === size);
-        itemInCart
-          ? (itemInCart.quantity += 1)
+        const index = draft.findIndex((i) => i.id === id && i.size === size);
+        index === -1
+          ? draft[index].quantity++
           : draft.push({ id, size, quantity: 1 });
       });
     });
     history.push("/cart");
   }
 
-  // TODO show using Immer
   function updateCart(id, size, quantity) {
     if (!Number.isInteger(size)) throw new Error("Size must be a number");
     if (!Number.isInteger(quantity))
       throw new Error("Quantity must be a number");
     setCart((cart) => {
-      if (quantity === 0) {
-        // Keep items that have a different id, or have the same id, but a different size
-        return cart.filter(
-          (i) => i.id !== id || (i.id === id && i.size !== size)
-        );
-      }
-      return cart.map((i) =>
-        i.id === id && i.size === size ? { ...i, quantity } : i
-      );
+      return produce(cart, (draft) => {
+        const index = draft.findIndex((i) => i.id === id && i.size === size);
+        if (quantity === 0) {
+          draft.splice(index, 1);
+        } else {
+          draft[index].quantity = quantity;
+        }
+      });
     });
   }
 
