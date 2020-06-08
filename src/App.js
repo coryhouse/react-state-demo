@@ -70,10 +70,11 @@ function App() {
         return cart.filter(
           (i) => i.id !== id || (i.id === id && i.size !== size)
         );
+      } else {
+        return cart.map((i) =>
+          i.id === id && i.size === size ? { ...i, quantity } : i
+        );
       }
-      return cart.map((i) =>
-        i.id === id && i.size === size ? { ...i, quantity } : i
-      );
     });
   }
 
