@@ -5,7 +5,7 @@ export default function Cart({ cart, shoes, updateCart }) {
   const history = useHistory();
 
   function renderItem(shoeInCart) {
-    const { price, id, name } = shoes.find((s) => s.id === shoeInCart.id);
+    const { price, id, name } = shoes.get(shoeInCart.id);
     return (
       <div key={id + shoeInCart.size} className="cart-item">
         <img src={`/images/shoe${id}.jpg`} alt="shoe" />
