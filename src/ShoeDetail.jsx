@@ -5,7 +5,7 @@ import SelectSize from "./SelectSize";
 export default function ShoeDetail({ shoes, cart, addToCart }) {
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
-  const shoe = shoes.find((shoe) => shoe.id === parseInt(params["id"]));
+  const shoe = shoes.get(parseInt(params["id"]));
 
   return (
     <>
