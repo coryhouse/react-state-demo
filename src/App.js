@@ -28,8 +28,8 @@ function App() {
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   useEffect(() => {
-    getShoes().then((shoes) => {
-      setShoes(shoes);
+    getShoes().then((shoesResponse) => {
+      setShoes(shoesResponse);
       setStatus(STATUS.IDLE);
     });
   }, []);
