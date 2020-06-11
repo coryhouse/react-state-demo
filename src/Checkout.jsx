@@ -105,7 +105,7 @@ export default function Checkout({ emptyCart }) {
             value={address.country}
             onChange={handleChange}
           >
-            <option>Select Country</option>
+            <option value="">Select Country</option>
             <option value="China">China</option>
             <option value="India">India</option>
             <option value="United Kingodom">United Kingdom</option>

@@ -38,15 +38,13 @@ function App() {
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   useEffect(() => {
-    getShoes().then((shoes) => {
-      setShoes(shoes);
+    getShoes().then((shoesResponse) => {
+      setShoes(shoesResponse);
       setStatus(STATUS.IDLE);
     });
   }, []);
 
   function addToCart(id, size) {
-    if (!Number.isInteger(size)) throw new Error("Size must be a number");
-
     setCart((cart) => {
       return produce(cart, (draft) => {
         const index = draft.findIndex((i) => i.id === id && i.size === size);
@@ -59,9 +57,6 @@ function App() {
   }
 
   function updateCart(id, size, quantity) {
-    if (!Number.isInteger(size)) throw new Error("Size must be a number");
-    if (!Number.isInteger(quantity))
-      throw new Error("Quantity must be a number");
     setCart((cart) => {
       return produce(cart, (draft) => {
         const index = draft.findIndex((i) => i.id === id && i.size === size);
