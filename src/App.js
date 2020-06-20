@@ -88,9 +88,12 @@ function App() {
             <Cart cart={cart} shoes={shoes} updateCart={updateCart} />
           </Route>
 
-          <Route path="/checkout">
-            <Checkout emptyCart={() => setCart([])} />
-          </Route>
+          <Route
+            path="/checkout"
+            render={(reactRouterProps) => (
+              <Checkout emptyCart={() => setCart([])} {...reactRouterProps} />
+            )}
+          />
 
           <Route path="/confirmation">
             <Confirmation />
