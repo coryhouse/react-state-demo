@@ -108,22 +108,6 @@ export default class Checkout extends React.Component {
               {(touched.city || status === STATUS.SUBMITTED) && errors.city}
             </p>
           </div>
-          
-        <div>
-          <label htmlFor="country">Country</label>
-          <br />
-          <select
-            onBlur={handleBlur}
-            id="country"
-            value={address.country}
-            onChange={handleChange}
-          >
-            <option value="">Select Country</option>
-            <option value="China">China</option>
-            <option value="India">India</option>
-            <option value="United Kingodom">United Kingdom</option>
-            <option value="USA">USA</option>
-          </select>
 
           <div>
             <label htmlFor="country">Country</label>
