@@ -63,7 +63,7 @@ export default function Checkout({ emptyCart }) {
   }
 
   function handleBlur(event) {
-    setTouched({ ...touched, [event.target.id]: true });
+    setTouched((t) => ({ ...t, [event.target.id]: true }));
   }
 
   return (
