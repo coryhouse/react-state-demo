@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { saveShippingAddress } from "./services/shippingApi";
+import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
 // Challenge: Finish building out the checkout with credit card, billing address, totals.
@@ -25,7 +25,6 @@ export default function Checkout({ emptyCart }) {
   const [status, setStatus] = useState(STATUS.IDLE);
 
   // Derived state
-  const dirty = address !== newAddress;
   const errors = getErrors(address);
   const isValid = Object.keys(errors).length === 0;
 

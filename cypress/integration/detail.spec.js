@@ -18,7 +18,7 @@ function checkQty(name, size, qty) {
   }).should("have.value", qty.toString());
 }
 
-context("ShoeDetail", () => {
+context("Detail", () => {
   it("should support adding to cart after size is selected, then removing from cart", () => {
     cy.addToCart(1, 7);
     checkHead("1 Item in My Cart");
@@ -32,7 +32,7 @@ context("ShoeDetail", () => {
     checkHead("Your cart is empty.");
   });
 
-  it("should increment the quantity in the cart when 'Add to cart' is clicked and the shoe is in the cart", () => {
+  it("should increment the quantity in the cart when 'Add to cart' is clicked and the product is in the cart", () => {
     cy.addToCart(2, 8);
     checkHead("1 Item in My Cart");
     cy.findByText("Continue Shopping").click();
@@ -42,7 +42,7 @@ context("ShoeDetail", () => {
     checkQty("Climber", 8, 2);
   });
 
-  it("should support adding the same shoe to the cart in different sizes, changing the quantity of each separately, and then support removing only one size of the same shoe", () => {
+  it("should support adding the same item to the cart in different sizes, changing the quantity of each separately, and then support removing only one size of the same item", () => {
     cy.addToCart(3, 7);
     checkHead("1 Item in My Cart");
     cy.findByText("Continue Shopping").click();
@@ -59,11 +59,11 @@ context("ShoeDetail", () => {
     checkQty("Explorer", 8, 2);
     checkHead("5 Items in My Cart");
 
-    // Now remove just the size 8 shoe
+    // Now remove just the size 8 item
     setQty("Explorer", 8, "Remove");
     checkHead("3 Items in My Cart");
 
-    // Assure the size 7 shoe's quantity hasn't been effected by removing the size 8 shoe.
+    // Assure the size 7 item's quantity hasn't been effected by removing the size 8 item.
     checkQty("Explorer", 7, 3);
   });
 });

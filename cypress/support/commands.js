@@ -26,7 +26,7 @@
 import "@testing-library/cypress/add-commands";
 
 Cypress.Commands.add("addToCart", (id, size) => {
-  cy.visit("/shoe/" + id);
+  cy.visit("/shoes/" + id);
   cy.findByRole("button", { name: "Add to cart" }).should("be.disabled");
   cy.findByLabelText("Select size").select(size.toString());
   cy.findByRole("button", { name: "Add to cart" }).click();

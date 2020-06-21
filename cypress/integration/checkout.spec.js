@@ -21,6 +21,6 @@ context("Checkout", () => {
 
     // Now should submit successfully since form is completed.
     cy.findByRole("button", { name: "Submit" }).click();
-    cy.findByRole("heading", { name: "Thanks for shopping with us!" });
+    cy.findByRole("heading", { name: "Thanks for shopping!" });
   });
 });

@@ -1,7 +1,9 @@
 {
-  "shoes": [
+  "products": [
     {
       "id": 1,
+      "category": "shoes",
+      "image": "shoe1.jpg",
       "name": "Hiker",
       "price": 94.95,
       "sizes": [7, 8],
@@ -9,6 +11,8 @@
     },
     {
       "id": 2,
+      "category": "shoes",
+      "image": "shoe2.jpg",
       "name": "Climber",
       "price": 78.99,
       "sizes": [8, 9],
@@ -16,6 +20,8 @@
     },
     {
       "id": 3,
+      "category": "shoes",
+      "image": "shoe3.jpg",
       "name": "Explorer",
       "price": 145.95,
       "sizes": [7, 8, 9],
