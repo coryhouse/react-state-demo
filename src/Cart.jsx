@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
+import Loader from "./Loader";
 
 export default function Cart({ cart, updateCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
@@ -15,7 +16,7 @@ export default function Cart({ cart, updateCart }) {
     );
     return (
       <div key={id + itemInCart.size} className="cart-item">
-        <img src={`/images/${image}`} alt="shoe" />
+        <img src={`/images/${image}`} alt={name} />
         <div>
           <h3>{name}</h3>
           <p>${price}</p>
@@ -46,7 +47,7 @@ export default function Cart({ cart, updateCart }) {
     return total;
   }, 0);
 
-  if (products === null) return "Loading...";
+  if (products === null) return <Loader />;
 
   return (
     <section id="cart">
