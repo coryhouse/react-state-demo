@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
@@ -6,8 +6,7 @@ import useFetch from "./services/useFetch";
 export default function Detail({ cart, addToCart }) {
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
-  const id = useRef([params.id]);
-  const [product] = useFetch(`/products/${id.current}`);
+  const [product] = useFetch(`/products/${params.id}`);
 
   if (!product) return "Loading...";
 
