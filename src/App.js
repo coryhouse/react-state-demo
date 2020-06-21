@@ -61,7 +61,7 @@ function App() {
         <main>
           <Switch>
             <Route path="/" exact>
-              Home
+              <h1>Welcome to Carved Rock Fitness</h1>
             </Route>
 
             <Route path="/cart">
