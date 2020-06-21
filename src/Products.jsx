@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
+import Loader from "./Loader";
 
 export default function Products() {
   const { params } = useRouteMatch();
@@ -16,7 +17,7 @@ export default function Products() {
       : products;
   }
 
-  if (!products) return "Loading...";
+  if (!products) return <Loader />;
 
   const filteredProducts = getFilteredProducts();
 

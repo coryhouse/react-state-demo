@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
+import Loader from "./Loader";
 
 export default function Detail({ cart, addToCart }) {
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
   const [product] = useFetch(`/products/${params.id}`);
 
-  if (!product) return "Loading...";
+  if (!product) return <Loader />;
 
   return (
     <>
