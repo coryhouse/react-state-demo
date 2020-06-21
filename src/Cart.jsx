@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
-import useProductDetailService from "./services/useProductDetailService";
+import useFetchAll from "./services/useFetchAll";
 
 export default function Cart({ cart, updateCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
-  const productIds = useRef(cart.map((i) => i.id));
-  const { products, loading } = useProductDetailService(productIds.current);
+  const requests = useRef(cart.map((i) => ({ url: `/products/${i.id}` })));
+  const [products] = useFetchAll(requests.current);
   const history = useHistory();
 
   function renderItem(itemInCart) {
@@ -45,7 +45,7 @@ export default function Cart({ cart, updateCart }) {
     return total;
   }, 0);
 
-  if (loading) return "Loading...";
+  if (products === null) return "Loading...";
 
   return (
     <section id="cart">
