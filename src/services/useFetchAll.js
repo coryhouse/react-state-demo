@@ -5,7 +5,7 @@ export default function useFetchAll(requests) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (data || error) return; // Only run once
+    if (data ?? error) return; // Only run once
     const promises = requests.map(({ url, init }) =>
       fetch(process.env.REACT_APP_API_BASE_URL + url, init)
     );
