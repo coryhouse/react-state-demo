@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
-export default function useApi(url) {
+export default function useFetch(url, init) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_API_BASE_URL + url)
+    fetch(process.env.REACT_APP_API_BASE_URL + url, init)
       .then((response) => {
         if (response.ok) return response.json();
         setError("Bad network response.");
@@ -15,7 +15,7 @@ export default function useApi(url) {
         console.error(err);
         setError(err);
       });
-  }, [url]);
+  }, [init, url]);
 
   return [data, error];
 }
