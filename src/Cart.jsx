@@ -1,25 +1,31 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
+import useProductDetailService from "./services/useProductDetailService";
 
-export default function Cart({ cart, shoes, updateCart }) {
+export default function Cart({ cart, updateCart }) {
+  // Using ref since not rendered, and need to avoid re-allocating on each render.
+  const productIds = useRef(cart.map((i) => i.id));
+  const { products, loading } = useProductDetailService(productIds.current);
   const history = useHistory();
 
-  function renderItem(shoeInCart) {
-    const { price, id, name } = shoes.find((s) => s.id === shoeInCart.id);
+  function renderItem(itemInCart) {
+    const { price, id, name, image } = products.find(
+      (s) => s.id === itemInCart.id
+    );
     return (
-      <div key={id + shoeInCart.size} className="cart-item">
-        <img src={`/images/shoe${id}.jpg`} alt="shoe" />
+      <div key={id + itemInCart.size} className="cart-item">
+        <img src={`/images/${image}`} alt="shoe" />
         <div>
           <h3>{name}</h3>
           <p>${price}</p>
-          <p>Size: {shoeInCart.size}</p>
+          <p>Size: {itemInCart.size}</p>
           <p>
             <select
-              aria-label={`Select quantity for ${name} size ${shoeInCart.size}`}
+              aria-label={`Select quantity for ${name} size ${itemInCart.size}`}
               onChange={(e) =>
-                updateCart(id, shoeInCart.size, parseInt(e.target.value))
+                updateCart(id, itemInCart.size, parseInt(e.target.value))
               }
-              value={shoeInCart.quantity}
+              value={itemInCart.quantity}
             >
               <option value="0">Remove</option>
               <option value="1">1</option>
@@ -34,10 +40,12 @@ export default function Cart({ cart, shoes, updateCart }) {
     );
   }
 
-  const totalQuantity = cart.reduce((total, shoe) => {
-    total = total + shoe.quantity;
+  const totalQuantity = cart.reduce((total, item) => {
+    total = total + item.quantity;
     return total;
   }, 0);
+
+  if (loading) return "Loading...";
 
   return (
     <section id="cart">
@@ -47,7 +55,7 @@ export default function Cart({ cart, shoes, updateCart }) {
           : `${totalQuantity} Item${totalQuantity > 1 ? "s" : ""} in My Cart`}
       </h1>
       <p>
-        <Link to="/">Continue Shopping</Link>
+        <Link to="/shoes">Continue Shopping</Link>
       </p>
       {cart.map(renderItem)}
       {cart.length > 0 && (
