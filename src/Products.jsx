@@ -33,14 +33,14 @@ export default function Products() {
           value={size}
           defaultOptionLabel="All sizes"
         />
-        {size && <h2>Found {filteredProducts.length} shoes</h2>}
+        {size && <h2>Found {filteredProducts.length} items</h2>}
       </section>
-      <section id="shoes">
+      <section id="products">
         {filteredProducts.length === 0 && "No items found."}
         {filteredProducts.map((p) => (
-          <div key={p.id} className="shoe">
+          <div key={p.id} className="product">
             <Link to={`/${category}/${p.id}`}>
-              <img src={`/images/${p.image}`} alt="shoe" />
+              <img src={`/images/${p.image}`} alt={p.name} />
               <h3>{p.name}</h3>
               <p>${p.price}</p>
             </Link>
