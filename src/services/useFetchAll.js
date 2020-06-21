@@ -12,8 +12,8 @@ export default function useFetchAll(requests) {
       .then((responses) => {
         return Promise.all(
           responses.map((response) => {
-            if (response.ok) return response.json();
-            setError("Bad network response.");
+            if (!response.ok) setError("Bad network response.");
+            return response.json();
           })
         );
       })
