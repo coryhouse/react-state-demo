@@ -7,10 +7,9 @@ export default function Detail({ cart, addToCart }) {
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
   const id = useRef([params.id]);
-  const [products] = useFetch(id.current);
-  const product = products[0];
+  const [product] = useFetch(`/products/${id.current}`);
 
-  if (!products) return "Loading...";
+  if (!product) return "Loading...";
 
   return (
     <>
