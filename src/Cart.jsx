@@ -1,14 +1,12 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
 
 export default function Cart({ cart, updateCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
-  const requests = useRef(
-    uniqueIdsInCart.map((id) => ({ url: `/products/${id}` }))
-  );
-  const [products] = useFetchAll(requests.current);
+  const requests = uniqueIdsInCart.map((id) => ({ url: `/products/${id}` }));
+  const [products] = useFetchAll(requests);
   const history = useHistory();
 
   function renderItem(itemInCart) {
