@@ -4,7 +4,10 @@ import useFetchAll from "./services/useFetchAll";
 
 export default function Cart({ cart, updateCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
-  const requests = useRef(cart.map((i) => ({ url: `/products/${i.id}` })));
+  const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
+  const requests = useRef(
+    uniqueIdsInCart.map((id) => ({ url: `/products/${id}` }))
+  );
   const [products] = useFetchAll(requests.current);
   const history = useHistory();
 
