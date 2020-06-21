@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import SelectSize from "./SelectSize";
-import useProductService from "./services/useProductService";
+import useFetch from "./services/useFetch";
 
 export default function Products() {
   const { params } = useRouteMatch();
   const { category } = params;
-  const { products, loading } = useProductService(category);
+  const [products] = useFetch("/products?category=" + category);
   const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
 
-  const filteredProducts = size
-    ? products.filter((p) => p.sizes.some((s) => s === parseInt(size)))
-    : products;
+  function getFilteredProducts() {
+    if (!products) return [];
+    return size
+      ? products.filter((p) => p.sizes.some((s) => s === parseInt(size)))
+      : products;
+  }
 
-  if (loading) return "Loading...";
+  if (!products) return "Loading...";
+
+  const filteredProducts = getFilteredProducts();
 
   return (
     <>
