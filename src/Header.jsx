@@ -10,10 +10,10 @@ export default function Header({ cart }) {
         </Link>
         <ul>
           <li>
-            <NavLink to="/">Footwear</NavLink>
+            <NavLink to="/shoes">Shoes</NavLink>
           </li>
           {/* <li>
-            <NavLink to="/bags">Bags</NavLink>
+            <NavLink to="/kayaks">Kayaks</NavLink>
           </li> */}
           <li>
             <Link to="/cart">View Cart ({cart.length})</Link>
