@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
-context("Shoes", () => {
+context("Products", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit("/shoes");
   });
 
   it("should support filtering and clearing filter", () => {
