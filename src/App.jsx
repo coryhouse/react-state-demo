@@ -34,8 +34,8 @@ function App() {
       return produce(cart, (draft) => {
         const index = draft.findIndex((i) => i.id === id && i.size === size);
         index === -1
-          ? draft[index].quantity++
-          : draft.push({ id, size, quantity: 1 });
+          ? draft.push({ id, size, quantity: 1 })
+          : draft[index].quantity++;
       });
     });
     history.push("/cart");
