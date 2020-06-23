@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
-import { saveShippingAddress } from "./services/shippingApi";
+import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
 // Challenge: Finish building out the checkout with credit card, billing address, totals.
@@ -29,7 +29,6 @@ export default function Checkout({ emptyCart }) {
     const _errors = {};
     if (!address.city) _errors.city = "City is required.";
     if (!address.country) _errors.country = "Country is required.";
-    debugger;
     setErrors(_errors);
     return _errors;
   }
