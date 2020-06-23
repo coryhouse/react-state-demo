@@ -3,7 +3,7 @@ import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Products from "./Products";
-import { Route, useHistory, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
@@ -11,7 +11,6 @@ import Confirmation from "./Confirmation";
 import produce from "immer";
 
 function App() {
-  const history = useHistory();
   // Note, can call React.useState if you prefer
   // Build up state slowly. Start with const statusState = useState(); Then destructure just first element in array. Then 2nd.
   // Pass func so it's only called once. (even though the initial value is only used on the first render, the function which initializes it still gets called))
@@ -38,7 +37,6 @@ function App() {
           : draft[index].quantity++;
       });
     });
-    history.push("/cart");
   }
 
   function updateCart(id, size, quantity) {
