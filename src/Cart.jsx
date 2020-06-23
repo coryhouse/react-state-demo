@@ -1,14 +1,18 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import useFetchAll from "./services/useFetchAll";
+import { getProduct } from "./services/productService";
+import { useQuery } from "react-query";
 import Loader from "./Loader";
 
 export default function Cart({ cart, updateCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
-  const requests = uniqueIdsInCart.map((id) => ({ url: `/products/${id}` }));
-  const [products] = useFetchAll(requests);
+  const { data: products, isLoading } = useQuery(["products"], fetchProducts);
   const history = useHistory();
+
+  function fetchProducts() {
+    return Promise.all(uniqueIdsInCart.map((id) => getProduct(null, id)));
+  }
 
   function renderItem(itemInCart) {
     const { price, id, name, image } = products.find(
@@ -47,7 +51,7 @@ export default function Cart({ cart, updateCart }) {
     return total;
   }, 0);
 
-  if (products === null) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
     <section id="cart">
