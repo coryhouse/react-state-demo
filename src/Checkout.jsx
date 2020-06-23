@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { saveShippingAddress } from "./services/shoeApi";
+import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
 // Challenge: Finish building out the checkout with credit card, billing address, totals.
@@ -25,7 +25,6 @@ export default function Checkout({ emptyCart }) {
   const [status, setStatus] = useState(STATUS.IDLE);
 
   // Derived state
-  const dirty = address !== newAddress;
   const errors = getErrors(address);
   const isValid = Object.keys(errors).length === 0;
 
@@ -70,11 +69,14 @@ export default function Checkout({ emptyCart }) {
     <>
       <h1>Shipping Info</h1>
       {!isValid && status === STATUS.SUBMITTED && (
-        <ul>
-          {Object.keys(errors).map((key) => {
-            return <li>{errors[key]}</li>;
-          })}
-        </ul>
+        <div role="alert">
+          <p>Please fix the following errors:</p>
+          <ul>
+            {Object.keys(errors).map((key) => {
+              return <li key={key}>{errors[key]}</li>;
+            })}
+          </ul>
+        </div>
       )}
       <form onSubmit={handleSubmit}>
         <div>
@@ -87,9 +89,11 @@ export default function Checkout({ emptyCart }) {
             value={address.city}
             onChange={handleChange}
           />
-        </div>
 
-        <p>{touched.city && errors.city}</p>
+          <p role="alert">
+            {(touched.city || status === STATUS.SUBMITTED) && errors.city}
+          </p>
+        </div>
 
         <div>
           <label htmlFor="country">Country</label>
@@ -100,15 +104,17 @@ export default function Checkout({ emptyCart }) {
             value={address.country}
             onChange={handleChange}
           >
-            <option>Select Country</option>
+            <option value="">Select Country</option>
             <option value="China">China</option>
             <option value="India">India</option>
             <option value="United Kingodom">United Kingdom</option>
             <option value="USA">USA</option>
           </select>
-        </div>
 
-        <p>{touched.country && errors.country}</p>
+          <p role="alert">
+            {(touched.country || status === STATUS.SUBMITTED) && errors.country}
+          </p>
+        </div>
 
         <div>
           <input
