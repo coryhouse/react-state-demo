@@ -7,7 +7,7 @@ import Loader from "./Loader";
 export default function Cart({ cart, updateCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
-  const { data: products, isLoading } = useQuery(["products"], fetchProducts);
+  const { data: products } = useQuery("products", fetchProducts);
   const history = useHistory();
 
   function fetchProducts() {
@@ -51,7 +51,7 @@ export default function Cart({ cart, updateCart }) {
     return total;
   }, 0);
 
-  if (isLoading) return <Loader />;
+  if (cart.length > 0 && !products) return <Loader />;
 
   return (
     <section id="cart">
