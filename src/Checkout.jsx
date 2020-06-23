@@ -1,5 +1,5 @@
 import React from "react";
-import { saveShippingAddress } from "./services/shippingApi";
+import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
 // Challenge: Finish building out the checkout with credit card, billing address, totals.
@@ -26,7 +26,6 @@ export default class Checkout extends React.Component {
   }
 
   // Derived state
-  dirty = () => this.state.address !== newAddress;
   errors = () => this.getErrors(this.state.address);
   isValid = () => Object.keys(this.errors()).length === 0;
 
