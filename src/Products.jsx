@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import SelectSize from "./SelectSize";
-import useFetch from "./services/useFetch";
+import { getProducts } from "./services/productService";
+import { useQuery } from "react-query";
 import Loader from "./Loader";
 
 export default function Products() {
   const { params } = useRouteMatch();
   const { category } = params;
-  const [products] = useFetch("/products?category=" + category);
+  const { data: products } = useQuery(["products", category], getProducts);
   const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
 
   function getFilteredProducts() {
