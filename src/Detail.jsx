@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useRouteMatch, Link } from "react-router-dom";
+import { useRouteMatch, Link, useHistory } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Loader from "./Loader";
 
 export default function Detail({ cart, addToCart }) {
+  const history = useHistory();
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
   const [product] = useFetch(`/products/${params.id}`);
@@ -30,7 +31,10 @@ export default function Detail({ cart, addToCart }) {
           <button
             className="btn btn-primary"
             disabled={!size}
-            onClick={() => addToCart(product.id, parseInt(size))}
+            onClick={() => {
+              addToCart(product.id, parseInt(size));
+              history.push("/cart");
+            }}
           >
             Add to cart
           </button>
