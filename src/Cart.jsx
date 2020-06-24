@@ -47,7 +47,7 @@ export default function Cart({ cart, updateCart }) {
     return total;
   }, 0);
 
-  if (!products) return <Loader />;
+  if (cart.length > 0 && !products) return <Loader />;
 
   return (
     <section id="cart">
