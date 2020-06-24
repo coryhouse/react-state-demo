@@ -8,7 +8,7 @@ export default function Detail({ cart, addToCart }) {
   const history = useHistory();
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
-  const [product] = useFetch(`/products/${params.id}`);
+  const [product] = useFetch(`products/${params.id}`);
 
   if (!product) return <Loader />;
 
