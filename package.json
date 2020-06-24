@@ -18,6 +18,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "start-server-and-test": "^1.11.0",
+    "swr": "^0.2.3",
     "xstate": "^4.10.0"
   },
   "scripts": {
