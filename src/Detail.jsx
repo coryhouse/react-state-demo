@@ -3,8 +3,10 @@ import { useRouteMatch, Link, useHistory } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Loader from "./Loader";
+import { useCart } from "./cart-context";
 
-export default function Detail({ cart, addToCart }) {
+export default function Detail() {
+  const { cart, addToCart } = useCart();
   const history = useHistory();
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
