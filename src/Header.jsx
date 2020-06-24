@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useCart } from "./cart-context";
+import { useCart } from "./cartContext";
 
 export default function Header() {
   const { cart } = useCart();
