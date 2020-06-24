@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { saveShippingAddress } from "./services/shipping-service";
+import { saveShippingAddress } from "./services/shippingService";
 import { useCart } from "./cartContext";
 
 // Declare static data outside the component to avoid needless recreation on each render.
