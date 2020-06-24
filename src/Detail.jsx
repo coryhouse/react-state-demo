@@ -3,7 +3,7 @@ import { useRouteMatch, Link, useHistory } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Loader from "./Loader";
-import { useCart } from "./cart-context";
+import { useCart } from "./cartContext";
 
 export default function Detail() {
   const { cart, addToCart } = useCart();

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
 import Loader from "./Loader";
-import { useCart } from "./cart-context";
+import { useCart } from "./cartContext";
 
 export default function Cart() {
   const { cart, updateCart } = useCart();
