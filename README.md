@@ -1,16 +1,16 @@
-This shoe store app showcases 8 ways to handle React state.
+This app showcases eight ways to handle React state.
 
 ![8 ways to handle React state](https://user-images.githubusercontent.com/1688997/85997509-2fd3cd00-b9cf-11ea-8708-76a33f695e70.png)
 
-| Branch      | State Examples                     |
-| ----------- | ---------------------------------- |
-| master      | useState, useRef                   |
-| ref         | useRef for uncontrolled components |
-| context     | context                            |
-| immer       | immer                              |
-| useReducer  | useReducer                         |
-| class       | Class-based state example          |
-| react-query | React query for remote state       |
+| Branch      | State examples                                             |
+| ----------- | ---------------------------------------------------------- |
+| master      | useState, useRef, web storage, lifted state, derived state |
+| ref         | useRef for uncontrolled components                         |
+| context     | context                                                    |
+| immer       | immer                                                      |
+| useReducer  | useReducer                                                 |
+| class       | Class-based state example                                  |
+| react-query | React query for remote state                               |
 
 ## Quick Start
 
