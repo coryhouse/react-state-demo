@@ -4,15 +4,15 @@ This app showcases eight ways to handle React state.
 
 Each branch implements the same features using different approaches.
 
-| Branch        | State examples                                             |
-| ------------- | ---------------------------------------------------------- |
-| `main`        | useState, useRef, web storage, lifted state, derived state |
-| `ref`         | useRef for uncontrolled components                         |
-| `context`     | context                                                    |
-| `immer`       | immer                                                      |
-| `useReducer`  | useReducer                                                 |
-| `class`       | Class-based state example                                  |
-| `react-query` | React query for remote state                               |
+| Branch      | State examples                                             |
+| ----------- | ---------------------------------------------------------- |
+| main        | useState, useRef, web storage, lifted state, derived state |
+| ref         | useRef for uncontrolled components                         |
+| context     | context                                                    |
+| immer       | immer                                                      |
+| useReducer  | useReducer                                                 |
+| class       | Class-based state example                                  |
+| react-query | React query for remote state                               |
 
 ## Quick Start
 
