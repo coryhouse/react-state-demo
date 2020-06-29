@@ -1,8 +1,9 @@
-const baseUrl = "http://localhost:3001/";
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 export async function getShippingAddress(userId) {
   return fetch(baseUrl + "shippingAddress/" + userId).then((response) => {
     if (response.ok) return response.json();
+    throw new Error("Bad network request.");
   });
 }
 
