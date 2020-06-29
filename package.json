@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@xstate/react": "^0.8.1",
+    "cross-env": "^7.0.2",
     "cypress": "^4.9.0",
     "eslint-plugin-cypress": "^2.11.1",
     "immer": "^7.0.5",
