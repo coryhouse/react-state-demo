@@ -7,7 +7,7 @@ import Loader from "./Loader";
 export default function Products() {
   const { params } = useRouteMatch();
   const { category } = params;
-  const [products] = useFetch("/products?category=" + category);
+  const [products] = useFetch("products?category=" + category);
   const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
 
   function getFilteredProducts() {
