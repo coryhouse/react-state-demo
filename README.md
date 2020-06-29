@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This shoe store app showcases 8 ways to handle React state.
 
 ## Quick Start
 
@@ -15,3 +15,5 @@ npm start
 ```
 
 `npm start` starts the app and the mock API.
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
