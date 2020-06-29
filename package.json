@@ -8,6 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@xstate/react": "^0.8.1",
+    "cross-env": "^7.0.2",
     "cypress": "^4.9.0",
     "eslint-plugin-cypress": "^2.11.1",
     "immer": "^7.0.5",
@@ -22,7 +23,7 @@
   },
   "scripts": {
     "start": "run-p start-app start-api",
-    "start-app": "react-scripts start",
+    "start-app": "cross-env REACT_APP_API_BASE_URL=http://localhost:3001 react-scripts start",
     "start-api": "json-server --port 3001 --watch db.json --delay 0",
     "build": "react-scripts build",
     "test": "react-scripts test",
