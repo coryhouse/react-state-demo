@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
-import Loader from "./Loader";
+import Spinner from "./Spinner";
 
 export default function Cart({ cart, updateCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
@@ -47,7 +47,7 @@ export default function Cart({ cart, updateCart }) {
     return total;
   }, 0);
 
-  if (cart.length > 0 && !products) return <Loader />;
+  if (cart.length > 0 && !products) return <Spinner />;
 
   return (
     <section id="cart">
