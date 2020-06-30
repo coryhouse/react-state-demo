@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useCart } from "./cartContext";
 
-export default function Header({ cart }) {
+export default function Header() {
+  const { cart } = useCart();
   return (
     <header>
       <nav>
