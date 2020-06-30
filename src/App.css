@@ -61,6 +61,7 @@ header li {
 
 .product {
   display: flex;
+  align-items: flex-end;
   max-width: 350px;
   text-align: center;
 }
