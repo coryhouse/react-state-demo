@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouteMatch, Link, useHistory } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
-import Loader from "./Loader";
+import Spinner from "./Spinner";
 
 export default function Detail({ cart, addToCart }) {
   const history = useHistory();
@@ -10,7 +10,7 @@ export default function Detail({ cart, addToCart }) {
   const { params } = useRouteMatch();
   const [product] = useFetch(`products/${params.id}`);
 
-  if (!product) return <Loader />;
+  if (!product) return <Spinner />;
 
   return (
     <>
