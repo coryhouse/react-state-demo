@@ -3,14 +3,16 @@ import { useRouteMatch, Link, useHistory } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
+import PageNotFound from "./PageNotFound";
 
 export default function Detail({ cart, addToCart }) {
   const history = useHistory();
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
-  const [product] = useFetch(`products/${params.id}`);
+  const [product, loading] = useFetch(`products/${params.id}`);
 
-  if (!product) return <Spinner />;
+  if (loading) return <Spinner />;
+  if (!loading && !product) return <PageNotFound />;
 
   return (
     <>
