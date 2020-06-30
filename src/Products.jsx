@@ -9,11 +9,10 @@ export default function Products() {
   const { category } = params;
   const [products] = useFetch("products?category=" + category);
   const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
-
   function getFilteredProducts() {
     if (!products) return [];
     return size
-      ? products.filter((p) => p.sizes.some((s) => s === parseInt(size)))
+      ? products.filter((p) => p.sizes.find((s) => s === parseInt(size)))
       : products;
   }
 
@@ -26,6 +25,7 @@ export default function Products() {
       <section id="filters">
         <label htmlFor="size">Filter by Size:</label>{" "}
         <SelectSize
+          id="size"
           onChange={(e) => {
             setSize(e.target.value);
             localStorage.setItem("shoe-size", e.target.value);
