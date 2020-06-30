@@ -1,16 +1,35 @@
 import React, { useState } from "react";
 import { useRouteMatch, Link, useHistory } from "react-router-dom";
+import { getProduct } from "./services/productService";
+import { useQuery, queryCache } from "react-query";
 import SelectSize from "./SelectSize";
-import useFetch from "./services/useFetch";
 import Loader from "./Loader";
 
 export default function Detail({ cart, addToCart }) {
   const history = useHistory();
   const [size, setSize] = useState("");
   const { params } = useRouteMatch();
-  const [product] = useFetch(`products/${params.id}`);
+  const productId = parseInt(params["id"]);
 
-  if (!product) return <Loader />;
+  const { data: product, isLoading, isError, error } = useQuery(
+    ["product", productId],
+    getProduct,
+    {
+      // If the user has already viewed the list of shoes, then the shoe should already be in cache,
+      // so use it as the initial data for this query to save a fetch.
+      // Comment this out and note that if you go to /shoes, then click on a shoe,
+      // you have to wait for it to load the first time.
+      // With this enabled, it loads instantly if you've already viewed the shoe page.
+      initialData: () => {
+        return queryCache
+          .getQueryData(["products", params.category])
+          ?.find((p) => p.id === productId);
+      },
+    }
+  );
+
+  if (isLoading) return <Loader />;
+  if (isError) throw error;
 
   return (
     <>
