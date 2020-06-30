@@ -9,7 +9,7 @@ export default class ErrorBoundary extends React.Component {
 
   render() {
     return this.state.hasError ? (
-      <h1>Something went wrong.</h1>
+      <h1>Oops! Something went wrong. Please try again.</h1>
     ) : (
       this.props.children
     );
