@@ -19,7 +19,7 @@ export default function Products() {
   }
 
   if (loading) return <Spinner />;
-  if (!loading && products.length === 0) return <PageNotFound />;
+  if (products.length === 0) return <PageNotFound />;
 
   const filteredProducts = getFilteredProducts();
 
