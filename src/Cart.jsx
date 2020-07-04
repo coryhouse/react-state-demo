@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
 import Spinner from "./Spinner";
 
@@ -8,7 +8,7 @@ export default function Cart({ cart, updateCart }) {
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
   const requests = uniqueIdsInCart.map((id) => ({ url: `products/${id}` }));
   const [products] = useFetchAll(requests);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function renderItem(itemInCart) {
     const { price, id, name, image } = products.find(
@@ -63,7 +63,7 @@ export default function Cart({ cart, updateCart }) {
       {cart.length > 0 && (
         <button
           className="btn btn-primary"
-          onClick={() => history.push("/checkout")}
+          onClick={() => navigate("/checkout")}
         >
           Checkout
         </button>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
@@ -16,7 +16,7 @@ const STATUS = {
 };
 
 export default function Checkout({ emptyCart }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   // Point: When to split vs unify state.
   // Tradeoff: unifying makes it easier to send to server, but slightly more work to update.
   const [address, setAddress] = useState(newAddress);
@@ -55,7 +55,7 @@ export default function Checkout({ emptyCart }) {
       setStatus(STATUS.SUBMITTING);
       await saveShippingAddress(address);
       emptyCart();
-      history.push("/confirmation");
+      navigate("/confirmation");
     } else {
       setStatus(STATUS.SUBMITTED);
     }

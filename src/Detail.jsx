@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { useRouteMatch, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 
 export default function Detail({ cart, addToCart }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [size, setSize] = useState("");
-  const { params } = useRouteMatch();
-  const [product, loading] = useFetch(`products/${params.id}`);
+  const { id } = useParams();
+  const [product, loading] = useFetch(`products/${id}`);
 
   if (loading) return <Spinner />;
   if (!loading && !product) return <PageNotFound />;
@@ -35,7 +35,7 @@ export default function Detail({ cart, addToCart }) {
             disabled={!size}
             onClick={() => {
               addToCart(product.id, parseInt(size));
-              history.push("/cart");
+              navigate("/cart");
             }}
           >
             Add to cart

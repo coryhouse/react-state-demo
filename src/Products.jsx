@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 
 export default function Products() {
-  const { params } = useRouteMatch();
-  const { category } = params;
+  const { category } = useParams();
   const [products, loading] = useFetch("products?category=" + category);
   const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
 
