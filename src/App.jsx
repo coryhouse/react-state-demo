@@ -8,6 +8,7 @@ import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
 import Confirmation from "./Confirmation";
+import produce from "immer";
 
 function App() {
   // Note, can call React.useState if you prefer
@@ -29,25 +30,25 @@ function App() {
 
   function addToCart(id, size) {
     setCart((cart) => {
-      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
-      if (alreadyInCart) {
-        return cart.map((i) => {
-          const isMatchingItem = i.id === id && i.size === size;
-          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
-        });
-      } else {
-        return [...cart, { id, size, quantity: 1 }];
-      }
+      return produce(cart, (draft) => {
+        const index = draft.findIndex((i) => i.id === id && i.size === size);
+        index === -1
+          ? draft.push({ id, size, quantity: 1 })
+          : draft[index].quantity++;
+      });
     });
   }
 
   function updateCart(id, size, quantity) {
     setCart((cart) => {
-      return quantity === 0
-        ? cart.filter((i) => i.id !== id || (i.id === id && i.size !== size))
-        : cart.map((i) =>
-            i.id === id && i.size === size ? { ...i, quantity } : i
-          );
+      return produce(cart, (draft) => {
+        const index = draft.findIndex((i) => i.id === id && i.size === size);
+        if (quantity === 0) {
+          draft.splice(index, 1);
+        } else {
+          draft[index].quantity = quantity;
+        }
+      });
     });
   }
 
