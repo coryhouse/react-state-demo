@@ -5,11 +5,25 @@ import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 
-export default function Detail({ cart, addToCart }) {
+export default function Detail({ cart, setCart }) {
   const navigate = useNavigate();
   const [size, setSize] = useState("");
   const { id } = useParams();
   const [product, loading] = useFetch(`products/${id}`);
+
+  function addToCart(id, size) {
+    setCart((cart) => {
+      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
+      if (alreadyInCart) {
+        return cart.map((i) => {
+          const isMatchingItem = i.id === id && i.size === size;
+          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
+        });
+      } else {
+        return [...cart, { id, size, quantity: 1 }];
+      }
+    });
+  }
 
   if (loading) return <Spinner />;
   if (!loading && !product) return <PageNotFound />;
