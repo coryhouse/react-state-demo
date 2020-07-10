@@ -7,7 +7,7 @@ import PageNotFound from "./PageNotFound";
 
 export default function Products() {
   const { category } = useParams();
-  const [products, loading] = useFetch("products?category=" + category);
+  const [products, loading, error] = useFetch("products?category=" + category);
   const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
 
   function getFilteredProducts() {
@@ -17,6 +17,7 @@ export default function Products() {
       : products;
   }
 
+  if (error) throw error;
   if (loading) return <Spinner />;
   if (products.length === 0) return <PageNotFound />;
 
