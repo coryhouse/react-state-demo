@@ -15,7 +15,7 @@ export default function useFetch(url, init) {
     fetch(process.env.REACT_APP_API_BASE_URL + url, init)
       .then((response) => {
         if (response.ok) return response.json();
-        setError("Bad network response.");
+        throw response;
       })
       .then((data) => setData(data))
       .catch((err) => {
