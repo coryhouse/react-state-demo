@@ -20,24 +20,21 @@ export default function Cart({ cart, setCart }) {
     });
   }
 
-  function renderItem(itemInCart) {
-    const { price, id, name, image } = products.find(
-      (s) => s.id === itemInCart.id
-    );
+  function renderItem(item) {
+    const { size, quantity } = item;
+    const { price, id, name, image } = products.find((s) => s.id === item.id);
     return (
-      <div key={id + itemInCart.size} className="cart-item">
+      <div key={id + size} className="cart-item">
         <img src={`/images/${image}`} alt={name} />
         <div>
           <h3>{name}</h3>
           <p>${price}</p>
-          <p>Size: {itemInCart.size}</p>
+          <p>Size: {size}</p>
           <p>
             <select
-              aria-label={`Select quantity for ${name} size ${itemInCart.size}`}
-              onChange={(e) =>
-                updateCart(id, itemInCart.size, parseInt(e.target.value))
-              }
-              value={itemInCart.quantity}
+              aria-label={`Select quantity for ${name} size ${size}`}
+              onChange={(e) => updateCart(id, size, parseInt(e.target.value))}
+              value={quantity}
             >
               <option value="0">Remove</option>
               <option value="1">1</option>
@@ -52,10 +49,7 @@ export default function Cart({ cart, setCart }) {
     );
   }
 
-  const totalQuantity = cart.reduce((total, item) => {
-    total = total + item.quantity;
-    return total;
-  }, 0);
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   if (loading) return <Spinner />;
   if (error) throw error;
