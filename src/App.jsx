@@ -27,30 +27,6 @@ function App() {
   // Persist cart in localStorage
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
-  function addToCart(id, size) {
-    setCart((cart) => {
-      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
-      if (alreadyInCart) {
-        return cart.map((i) => {
-          const isMatchingItem = i.id === id && i.size === size;
-          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
-        });
-      } else {
-        return [...cart, { id, size, quantity: 1 }];
-      }
-    });
-  }
-
-  function updateCart(id, size, quantity) {
-    setCart((cart) => {
-      return quantity === 0
-        ? cart.filter((i) => i.id !== id || (i.id === id && i.size !== size))
-        : cart.map((i) =>
-            i.id === id && i.size === size ? { ...i, quantity } : i
-          );
-    });
-  }
-
   return (
     <>
       <div className="content">
@@ -61,7 +37,7 @@ function App() {
             <Route path="/" element={<h1>Welcome to Carved Rock Fitness</h1>} />
             <Route
               path="/cart"
-              element={<Cart cart={cart} updateCart={updateCart} />}
+              element={<Cart cart={cart} setCart={setCart} />}
             />
             <Route
               path="/checkout"
@@ -71,7 +47,7 @@ function App() {
             <Route path="/:category" element={<Products />} />
             <Route
               path="/:category/:id"
-              element={<Detail cart={cart} addToCart={addToCart} />}
+              element={<Detail cart={cart} setCart={setCart} />}
             />
             <Route path="/page-not-found" />
           </Routes>

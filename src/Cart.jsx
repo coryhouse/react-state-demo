@@ -3,12 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
 import Spinner from "./Spinner";
 
-export default function Cart({ cart, updateCart }) {
+export default function Cart({ cart, setCart }) {
   // Using ref since not rendered, and need to avoid re-allocating on each render.
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
   const requests = uniqueIdsInCart.map((id) => ({ url: `products/${id}` }));
-  const [products] = useFetchAll(requests);
+  const [products, loading, error] = useFetchAll(requests);
   const navigate = useNavigate();
+
+  function updateCart(id, size, quantity) {
+    setCart((cart) => {
+      return quantity === 0
+        ? cart.filter((i) => i.id !== id || (i.id === id && i.size !== size))
+        : cart.map((i) =>
+            i.id === id && i.size === size ? { ...i, quantity } : i
+          );
+    });
+  }
 
   function renderItem(itemInCart) {
     const { price, id, name, image } = products.find(
@@ -47,7 +57,8 @@ export default function Cart({ cart, updateCart }) {
     return total;
   }, 0);
 
-  if (cart.length > 0 && !products) return <Spinner />;
+  if (loading) return <Spinner />;
+  if (error) throw error;
 
   return (
     <section id="cart">
