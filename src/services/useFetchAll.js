@@ -2,25 +2,27 @@ import { useState, useEffect } from "react";
 
 export default function useFetchAll(requests) {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (data ?? error) return; // Only run once
+    if (!loading ?? data ?? error) return; // Only run once
 
     const promises = requests.map(({ url, init }) =>
       fetch(process.env.REACT_APP_API_BASE_URL + url, init).then((response) => {
         if (response.ok) return response.json();
-        throw new Error("Bad network response");
+        throw response;
       })
     );
 
     Promise.all(promises)
-      .then((data) => setData(data))
-      .catch((err) => {
-        console.error(err);
-        setError(err);
-      });
-  }, [data, error, requests]);
+      .then((json) => setData(json))
+      .catch((e) => {
+        console.error(e);
+        setError(e);
+      })
+      .finally(() => setLoading(false));
+  }, [data, error, loading, requests]);
 
-  return [data, error];
+  return [data, loading, error];
 }

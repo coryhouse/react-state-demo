@@ -1,16 +1,32 @@
 import React, { useState } from "react";
-import { useRouteMatch, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
-import Loader from "./Loader";
+import Spinner from "./Spinner";
+import PageNotFound from "./PageNotFound";
 
-export default function Detail({ cart, addToCart }) {
-  const history = useHistory();
+export default function Detail({ cart, setCart }) {
+  const navigate = useNavigate();
   const [size, setSize] = useState("");
-  const { params } = useRouteMatch();
-  const [product] = useFetch(`products/${params.id}`);
+  const { id } = useParams();
+  const [product, loading] = useFetch(`products/${id}`);
 
-  if (!product) return <Loader />;
+  function addToCart(id, size) {
+    setCart((cart) => {
+      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
+      if (alreadyInCart) {
+        return cart.map((i) => {
+          const isMatchingItem = i.id === id && i.size === size;
+          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
+        });
+      } else {
+        return [...cart, { id, size, quantity: 1 }];
+      }
+    });
+  }
+
+  if (loading) return <Spinner />;
+  if (!loading && !product) return <PageNotFound />;
 
   return (
     <>
@@ -33,7 +49,7 @@ export default function Detail({ cart, addToCart }) {
             disabled={!size}
             onClick={() => {
               addToCart(product.id, parseInt(size));
-              history.push("/cart");
+              navigate("/cart");
             }}
           >
             Add to cart

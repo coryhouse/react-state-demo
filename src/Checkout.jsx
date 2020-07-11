@@ -1,26 +1,20 @@
 import React, { useState, useRef } from "react";
-import { useHistory } from "react-router-dom";
 import { saveShippingAddress } from "./services/shippingService";
-
-// Declare static data outside the component to avoid needless recreation on each render.
-// Challenge: Finish building out the checkout with credit card, billing address, totals.
 
 const STATUS = {
   IDLE: "IDLE",
   SUBMITTED: "SUBMITTED",
   SUBMITTING: "SUBMITTING",
+  COMPLETED: "COMPLETED",
 };
 
 export default function Checkout({ emptyCart }) {
-  const history = useHistory();
   const cityRef = useRef();
   const countryRef = useRef();
 
-  // Point: When to split vs unify state.
-  // Tradeoff: unifying makes it easier to send to server, but slightly more work to update.
   const [errors, setErrors] = useState({});
-  // Object with property for each field that has been touched.
   const [status, setStatus] = useState(STATUS.IDLE);
+  const [saveError, setSaveError] = useState(null);
 
   // Derived state
   const isValid = () => Object.keys(errors).length === 0;
@@ -44,13 +38,20 @@ export default function Checkout({ emptyCart }) {
     // Have to do this here because state updates are async, so can't rely on reading state here.
     if (Object.keys(errors).length === 0) {
       setStatus(STATUS.SUBMITTING);
-      await saveShippingAddress(address);
-      emptyCart();
-      history.push("/confirmation");
+      try {
+        await saveShippingAddress(address);
+        emptyCart();
+        setStatus(STATUS.COMPLETED);
+      } catch (err) {
+        setSaveError(err);
+      }
     } else {
       setStatus(STATUS.SUBMITTED);
     }
   }
+
+  if (saveError) throw saveError;
+  if (status === STATUS.COMPLETED) return <h1>Thanks for shopping!</h1>;
 
   return (
     <>
