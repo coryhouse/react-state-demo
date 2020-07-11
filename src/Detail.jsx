@@ -34,11 +34,12 @@ export default function Detail({ cart, setCart }) {
       <p>{product.description}</p>
       <h2>${product.price}</h2>
       <p>
-        <SelectSize
-          onChange={(e) => setSize(e.target.value)}
-          value={size}
-          defaultOptionLabel="What size?"
-        />
+        <select onChange={(e) => setSize(e.target.value)} value={size}>
+          <option value="">What size?</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
       </p>
       <p>
         {cart.find((c) => c === product.id) ? (
