@@ -23,6 +23,7 @@ export default function Checkout({ emptyCart }) {
   // Object with property for each field that has been touched.
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState(STATUS.IDLE);
+  const [saveError, setSaveError] = useState(false);
 
   // Derived state
   const errors = getErrors(address);
@@ -53,9 +54,13 @@ export default function Checkout({ emptyCart }) {
     event.preventDefault();
     if (isValid) {
       setStatus(STATUS.SUBMITTING);
-      await saveShippingAddress(address);
-      emptyCart();
-      navigate("/confirmation");
+      try {
+        await saveShippingAddress(address);
+        emptyCart();
+        navigate("/confirmation");
+      } catch (e) {
+        setSaveError(true);
+      }
     } else {
       setStatus(STATUS.SUBMITTED);
     }
@@ -64,6 +69,8 @@ export default function Checkout({ emptyCart }) {
   function handleBlur(event) {
     setTouched({ ...touched, [event.target.id]: true });
   }
+
+  if (saveError) throw saveError;
 
   return (
     <>
