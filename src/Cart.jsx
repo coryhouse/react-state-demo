@@ -22,7 +22,7 @@ export default function Cart({ cart, setCart }) {
 
   function renderItem(item) {
     const { id, size, quantity } = item;
-    const { price, name, image } = products.find((s) => s.id === item.id);
+    const { price, name, image } = products.find((p) => p.id === id);
     return (
       <li key={id + size} className="cart-item">
         <img src={`/images/${image}`} alt={name} />
