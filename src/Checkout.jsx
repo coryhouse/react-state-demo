@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
-// Challenge: Finish building out the checkout with credit card, billing address, totals.
 const newAddress = {
   city: "",
   country: "",
@@ -29,7 +28,6 @@ export default function Checkout({ emptyCart }) {
   const errors = getErrors(address);
   const isValid = Object.keys(errors).length === 0;
 
-  // Show controlled vs uncontrolled form.
   function handleChange(e) {
     e.persist();
     // Using callback form of setter here since we need the existing state
@@ -50,6 +48,10 @@ export default function Checkout({ emptyCart }) {
     return errors;
   }
 
+  function handleBlur(event) {
+    setTouched({ ...touched, [event.target.id]: true });
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
     if (isValid) {
@@ -64,10 +66,6 @@ export default function Checkout({ emptyCart }) {
     } else {
       setStatus(STATUS.SUBMITTED);
     }
-  }
-
-  function handleBlur(event) {
-    setTouched({ ...touched, [event.target.id]: true });
   }
 
   if (saveError) throw saveError;
