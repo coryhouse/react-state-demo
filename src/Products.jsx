@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
@@ -27,15 +26,19 @@ export default function Products() {
     <>
       <section id="filters">
         <label htmlFor="size">Filter by Size:</label>{" "}
-        <SelectSize
+        <select
           id="size"
           onChange={(e) => {
             setSize(e.target.value);
             localStorage.setItem("shoe-size", e.target.value);
           }}
           value={size}
-          defaultOptionLabel="All sizes"
-        />
+        >
+          <option value="">All sizes</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
         {size && <h2>Found {filteredProducts.length} items</h2>}
       </section>
       <section id="products">
