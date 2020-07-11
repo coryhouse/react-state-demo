@@ -17,14 +17,14 @@ export default function Checkout({ emptyCart }) {
   const [saveError, setSaveError] = useState(null);
 
   // Derived state
-  const isValid = () => Object.keys(errors).length === 0;
+  const isValid = Object.keys(errors).length === 0;
 
   function getErrors(address) {
-    const _errors = {};
-    if (!address.city) _errors.city = "City is required.";
-    if (!address.country) _errors.country = "Country is required.";
-    setErrors(_errors);
-    return _errors;
+    const result = {};
+    if (!address.city) result.city = "City is required.";
+    if (!address.country) result.country = "Country is required.";
+    setErrors(result);
+    return result;
   }
 
   async function handleSubmit(event) {
@@ -33,11 +33,10 @@ export default function Checkout({ emptyCart }) {
       city: cityRef.current.value,
       country: countryRef.current.value,
     };
-    const errors = getErrors(address);
-
+    const result = getErrors(address);
+    setStatus(STATUS.SUBMITTING);
     // Have to do this here because state updates are async, so can't rely on reading state here.
-    if (Object.keys(errors).length === 0) {
-      setStatus(STATUS.SUBMITTING);
+    if (Object.keys(result).length === 0) {
       try {
         await saveShippingAddress(address);
         emptyCart();
@@ -56,7 +55,7 @@ export default function Checkout({ emptyCart }) {
   return (
     <>
       <h1>Shipping Info</h1>
-      {!isValid() && status === STATUS.SUBMITTED && (
+      {!isValid && status === STATUS.SUBMITTED && (
         <div role="alert">
           <p>Please fix the following errors:</p>
           <ul>
