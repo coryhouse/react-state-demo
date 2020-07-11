@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 
 export default function Detail({ cart, setCart }) {
+  const sizeRef = useRef();
   const navigate = useNavigate();
-  const [size, setSize] = useState("");
   const { id } = useParams();
   const [product, loading] = useFetch(`products/${id}`);
 
@@ -34,11 +33,12 @@ export default function Detail({ cart, setCart }) {
       <p>{product.description}</p>
       <h2>${product.price}</h2>
       <p>
-        <SelectSize
-          onChange={(e) => setSize(e.target.value)}
-          value={size}
-          defaultOptionLabel="What size?"
-        />
+        <select ref={sizeRef}>
+          <option value="">What size?</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
       </p>
       <p>
         {cart.find((c) => c === product.id) ? (
@@ -46,8 +46,9 @@ export default function Detail({ cart, setCart }) {
         ) : (
           <button
             className="btn btn-primary"
-            disabled={!size}
             onClick={() => {
+              const size = sizeRef.current.value;
+              if (!size) return alert("Select size.");
               addToCart(product.id, parseInt(size));
               navigate("/cart");
             }}
