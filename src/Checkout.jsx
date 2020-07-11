@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
@@ -12,37 +11,35 @@ const STATUS = {
   IDLE: "IDLE",
   SUBMITTED: "SUBMITTED",
   SUBMITTING: "SUBMITTING",
+  COMPLETED: "COMPLETED",
 };
 
 export default function Checkout({ emptyCart }) {
-  const navigate = useNavigate();
   const [address, setAddress] = useState(newAddress);
   // Object with property for each field that has been touched.
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState(STATUS.IDLE);
-  const [saveError, setSaveError] = useState(false);
+  const [saveError, setSaveError] = useState(null);
 
   // Derived state
   const errors = getErrors(address);
   const isValid = Object.keys(errors).length === 0;
-
-  function handleChange(e) {
-    e.persist();
-    // Using callback form of setter here since we need the existing state
-    setAddress((curAddress) => {
-      // Note that we're storing the new data here and passing to validate. Otherwise, validate would use stale data since setting state is async.
-      return {
-        ...curAddress,
-        [e.target.id]: e.target.value,
-      };
-    });
-  }
 
   function getErrors(address) {
     const errors = {};
     if (!address.city) errors.city = "City is required.";
     if (!address.country) errors.country = "Country is required.";
     return errors;
+  }
+
+  function handleChange(e) {
+    e.persist();
+    setAddress((curAddress) => {
+      return {
+        ...curAddress,
+        [e.target.id]: e.target.value,
+      };
+    });
   }
 
   function handleBlur(e) {
@@ -56,7 +53,7 @@ export default function Checkout({ emptyCart }) {
       try {
         await saveShippingAddress(address);
         emptyCart();
-        navigate("/confirmation");
+        setStatus(STATUS.COMPLETED);
       } catch (err) {
         setSaveError(err);
       }
@@ -66,6 +63,7 @@ export default function Checkout({ emptyCart }) {
   }
 
   if (saveError) throw saveError;
+  if (status === STATUS.COMPLETED) return <h1>Thanks for shopping!</h1>;
 
   return (
     <>
