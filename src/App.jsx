@@ -7,7 +7,6 @@ import { Route, Routes } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
-import Confirmation from "./Confirmation";
 
 function App() {
   // Note, can call React.useState if you prefer
@@ -43,7 +42,6 @@ function App() {
               path="/checkout"
               element={<Checkout emptyCart={() => setCart([])} />}
             />
-            <Route path="/confirmation" element={<Confirmation />} />
             <Route path="/:category" element={<Products />} />
             <Route
               path="/:category/:id"
