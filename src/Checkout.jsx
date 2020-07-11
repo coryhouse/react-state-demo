@@ -16,8 +16,6 @@ const STATUS = {
 
 export default function Checkout({ emptyCart }) {
   const navigate = useNavigate();
-  // Point: When to split vs unify state.
-  // Tradeoff: unifying makes it easier to send to server, but slightly more work to update.
   const [address, setAddress] = useState(newAddress);
   // Object with property for each field that has been touched.
   const [touched, setTouched] = useState({});
@@ -33,11 +31,10 @@ export default function Checkout({ emptyCart }) {
     // Using callback form of setter here since we need the existing state
     setAddress((curAddress) => {
       // Note that we're storing the new data here and passing to validate. Otherwise, validate would use stale data since setting state is async.
-      const updatedAddress = {
+      return {
         ...curAddress,
         [e.target.id]: e.target.value,
       };
-      return updatedAddress;
     });
   }
 
@@ -48,20 +45,20 @@ export default function Checkout({ emptyCart }) {
     return errors;
   }
 
-  function handleBlur(event) {
-    setTouched({ ...touched, [event.target.id]: true });
+  function handleBlur(e) {
+    setTouched({ ...touched, [e.target.id]: true });
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
     if (isValid) {
       setStatus(STATUS.SUBMITTING);
       try {
         await saveShippingAddress(address);
         emptyCart();
         navigate("/confirmation");
-      } catch (e) {
-        setSaveError(true);
+      } catch (err) {
+        setSaveError(err);
       }
     } else {
       setStatus(STATUS.SUBMITTED);
