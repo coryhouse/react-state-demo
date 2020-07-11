@@ -70,6 +70,11 @@ header li {
   height: 150px;
 }
 
+#cart ul {
+  padding: 0;
+  list-style-type: none;
+}
+
 #cart td,
 #cart th {
   padding-left: 20px;
