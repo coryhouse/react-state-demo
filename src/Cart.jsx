@@ -21,10 +21,10 @@ export default function Cart({ cart, setCart }) {
   }
 
   function renderItem(item) {
-    const { size, quantity } = item;
-    const { price, id, name, image } = products.find((s) => s.id === item.id);
+    const { id, size, quantity } = item;
+    const { price, name, image } = products.find((s) => s.id === item.id);
     return (
-      <div key={id + size} className="cart-item">
+      <li key={id + size} className="cart-item">
         <img src={`/images/${image}`} alt={name} />
         <div>
           <h3>{name}</h3>
@@ -45,7 +45,7 @@ export default function Cart({ cart, setCart }) {
             </select>
           </p>
         </div>
-      </div>
+      </li>
     );
   }
 
@@ -64,7 +64,9 @@ export default function Cart({ cart, setCart }) {
       <p>
         <Link to="/shoes">Continue Shopping</Link>
       </p>
-      {cart.map(renderItem)}
+
+      <ul>{cart.map(renderItem)}</ul>
+
       {cart.length > 0 && (
         <button
           className="btn btn-primary"
