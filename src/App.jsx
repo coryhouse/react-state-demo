@@ -40,6 +40,16 @@ function App() {
     });
   }
 
+  function updateCart(id, size, quantity) {
+    setCart((cart) => {
+      return quantity === 0
+        ? cart.filter((i) => i.id !== id || (i.id === id && i.size !== size))
+        : cart.map((i) =>
+            i.id === id && i.size === size ? { ...i, quantity } : i
+          );
+    });
+  }
+
   return (
     <>
       <div className="content">
@@ -50,7 +60,7 @@ function App() {
             <Route path="/" element={<h1>Welcome to Carved Rock Fitness</h1>} />
             <Route
               path="/cart"
-              element={<Cart cart={cart} setCart={setCart} />}
+              element={<Cart cart={cart} updateCart={updateCart} />}
             />
             <Route
               path="/checkout"
