@@ -19,9 +19,17 @@ export default function Detail({ cart, addToCart }) {
       <p>{product.description}</p>
       <h2>${product.price}</h2>
       <p>
-        <select onChange={(e) => setSize(e.target.value)} value={size}>
+        <select
+          aria-label="Select size"
+          onChange={(e) => setSize(e.target.value)}
+          value={size}
+        >
           <option value="">What size?</option>
-          {product.sizes.map(s => <option key={s} value={s}>{s}</option>)}
+          {product.sizes.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
         </select>
       </p>
       <p>
