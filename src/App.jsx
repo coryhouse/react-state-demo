@@ -27,24 +27,24 @@ function App() {
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
   function addToCart(id, size) {
-    setCart((cart) => {
-      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
+    setCart((items) => {
+      const alreadyInCart = items.find((i) => i.id === id && i.size === size);
       if (alreadyInCart) {
-        return cart.map((i) => {
+        return items.map((i) => {
           const isMatchingItem = i.id === id && i.size === size;
           return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
         });
       } else {
-        return [...cart, { id, size, quantity: 1 }];
+        return [...items, { id, size, quantity: 1 }];
       }
     });
   }
 
-  function updateCart(id, size, quantity) {
-    setCart((cart) => {
+  function updateQuantity(id, size, quantity) {
+    setCart((items) => {
       return quantity === 0
-        ? cart.filter((i) => i.id !== id || (i.id === id && i.size !== size))
-        : cart.map((i) =>
+        ? items.filter((i) => !(i.id === id && i.size === size))
+        : items.map((i) =>
             i.id === id && i.size === size ? { ...i, quantity } : i
           );
     });
@@ -60,7 +60,7 @@ function App() {
             <Route path="/" element={<h1>Welcome to Carved Rock Fitness</h1>} />
             <Route
               path="/cart"
-              element={<Cart cart={cart} updateCart={updateCart} />}
+              element={<Cart cart={cart} updateQuantity={updateQuantity} />}
             />
             <Route
               path="/checkout"
