@@ -5,15 +5,11 @@ export default function useFetch(url, init) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const isMounted = useRef(false);
-  const prevInit = useRef();
-  const prevUrl = useRef();
 
   useEffect(() => {
     isMounted.current = true;
-    // Only refetch if url or init params change.
-    if (prevUrl.current === url && prevInit.current === init) return;
-    prevUrl.current = url;
-    prevInit.current = init;
+    if (!loading ?? data ?? error) return; // Only run once
+
     fetch(process.env.REACT_APP_API_BASE_URL + url, init)
       .then((response) => {
         if (response.ok) return response.json();
@@ -35,7 +31,7 @@ export default function useFetch(url, init) {
     return () => {
       isMounted.current = false;
     };
-  }, [init, url]);
+  }, [data, error, init, loading, url]);
 
   return [data, loading, error];
 }
