@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import SelectSize from "./SelectSize";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
@@ -36,9 +35,7 @@ export default function Detail({ cart, setCart }) {
       <p>
         <select onChange={(e) => setSize(e.target.value)} value={size}>
           <option value="">What size?</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
+          {product.sizes.map(s => <option key={s} value={s}>{s}</option>)}
         </select>
       </p>
       <p>
