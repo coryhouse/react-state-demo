@@ -4,7 +4,7 @@ import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 
-export default function Detail({ cart, addToCart }) {
+export default function Detail({ addToCart }) {
   const navigate = useNavigate();
   const [size, setSize] = useState("");
   const { id } = useParams();
