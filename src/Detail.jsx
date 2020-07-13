@@ -33,20 +33,16 @@ export default function Detail({ cart, addToCart }) {
         </select>
       </p>
       <p>
-        {cart.find((c) => c === product.id) ? (
-          <Link to="/cart">In Cart</Link>
-        ) : (
-          <button
-            className="btn btn-primary"
-            disabled={!size}
-            onClick={() => {
-              addToCart(product.id, parseInt(size));
-              navigate("/cart");
-            }}
-          >
-            Add to cart
-          </button>
-        )}
+        <button
+          className="btn btn-primary"
+          disabled={!size}
+          onClick={() => {
+            addToCart(product.id, parseInt(size));
+            navigate("/cart");
+          }}
+        >
+          Add to cart
+        </button>
       </p>
       <p>
         <Link to="/">Go Back</Link>
