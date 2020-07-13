@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
 import Spinner from "./Spinner";
 
-export default function Cart({ cart, updateQuantity }) {
+export default function Cart({ cart, updateQuantity, numItemsInCart }) {
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
-  const requests = uniqueIdsInCart.map((id) => ({ url: `products/${id}` }));
+  const requests = uniqueIdsInCart.map((id) => ({
+    url: `products/${id}`,
+  }));
   const [products, loading, error] = useFetchAll(requests);
   const navigate = useNavigate();
 
@@ -43,14 +45,12 @@ export default function Cart({ cart, updateQuantity }) {
   if (loading) return <Spinner />;
   if (error) throw error;
 
-  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-
   return (
     <section id="cart">
       <h1>
-        {totalQuantity === 0
+        {numItemsInCart === 0
           ? "Your cart is empty."
-          : `${totalQuantity} Item${totalQuantity > 1 ? "s" : ""} in My Cart`}
+          : `${numItemsInCart} Item${numItemsInCart > 1 ? "s" : ""} in My Cart`}
       </h1>
       <p>
         <Link to="/shoes">Continue Shopping</Link>

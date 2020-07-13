@@ -5,7 +5,7 @@ const activeStyle = {
   color: "purple",
 };
 
-export default function Header({ cart }) {
+export default function Header({ numItemsInCart }) {
   return (
     <header>
       <nav>
@@ -22,7 +22,7 @@ export default function Header({ cart }) {
             <NavLink to="/kayaks">Kayaks</NavLink>
           </li> */}
           <li>
-            <Link to="/cart">View Cart ({cart.length})</Link>
+            <Link to="/cart">View Cart ({numItemsInCart})</Link>
           </li>
         </ul>
       </nav>

@@ -50,17 +50,25 @@ function App() {
     });
   }
 
+  const numItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       <div className="content">
-        <Header cart={cart} />
+        <Header numItemsInCart={numItemsInCart} />
 
         <main>
           <Routes>
             <Route path="/" element={<h1>Welcome to Carved Rock Fitness</h1>} />
             <Route
               path="/cart"
-              element={<Cart cart={cart} updateQuantity={updateQuantity} />}
+              element={
+                <Cart
+                  cart={cart}
+                  updateQuantity={updateQuantity}
+                  numItemsInCart={numItemsInCart}
+                />
+              }
             />
             <Route
               path="/checkout"
