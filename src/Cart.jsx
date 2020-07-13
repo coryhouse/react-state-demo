@@ -5,10 +5,8 @@ import Spinner from "./Spinner";
 
 export default function Cart({ cart, updateQuantity, numItemsInCart }) {
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
-  const requests = uniqueIdsInCart.map((id) => ({
-    url: `products/${id}`,
-  }));
-  const [products, loading, error] = useFetchAll(requests);
+  const urls = uniqueIdsInCart.map((id) => `products/${id}`);
+  const [products, loading, error] = useFetchAll(urls);
   const navigate = useNavigate();
 
   function renderItem(item) {
