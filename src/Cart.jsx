@@ -40,15 +40,15 @@ export default function Cart({ cart, updateQuantity }) {
     );
   }
 
-  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-
   if (loading) return <Spinner />;
   if (error) throw error;
+
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <section id="cart">
       <h1>
-        {cart.length === 0
+        {totalQuantity === 0
           ? "Your cart is empty."
           : `${totalQuantity} Item${totalQuantity > 1 ? "s" : ""} in My Cart`}
       </h1>
