@@ -1,15 +1,13 @@
 import { useState, useEffect } from "react";
 
-export default function useFetchAll(requests) {
+export default function useFetchAll(urls) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!loading ?? data ?? error) return; // Only run once
-
-    const promises = requests.map(({ url, init }) =>
-      fetch(process.env.REACT_APP_API_BASE_URL + url, init).then((response) => {
+    const promises = urls.map((url) =>
+      fetch(process.env.REACT_APP_API_BASE_URL + url).then((response) => {
         if (response.ok) return response.json();
         throw response;
       })
@@ -17,12 +15,13 @@ export default function useFetchAll(requests) {
 
     Promise.all(promises)
       .then((json) => setData(json))
-      .catch((e) => {
-        console.error(e);
-        setError(e);
+      .catch((err) => {
+        console.error(err);
+        setError(err);
       })
       .finally(() => setLoading(false));
-  }, [data, error, loading, requests]);
+    // eslint-disable-next-line
+  }, []);
 
   return [data, loading, error];
 }
