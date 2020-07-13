@@ -17,7 +17,7 @@ export default function Detail({ addToCart }) {
     <div id="detail">
       <h1>{product.name}</h1>
       <p>{product.description}</p>
-      <h2>${product.price}</h2>
+      <p id="price">${product.price}</p>
       <p>
         <select
           aria-label="Select size"

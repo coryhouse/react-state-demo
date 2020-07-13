@@ -58,6 +58,13 @@ header li {
   max-height: 400;
 }
 
+#price {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: normal;
+  font-size: 1.5em;
+}
+
 #products {
   display: flex;
   justify-content: center;
