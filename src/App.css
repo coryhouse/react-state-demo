@@ -54,6 +54,10 @@ header li {
   margin-right: 20px;
 }
 
+#detail img {
+  max-height: 400;
+}
+
 #products {
   display: flex;
   justify-content: center;

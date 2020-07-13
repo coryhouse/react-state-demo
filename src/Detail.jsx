@@ -14,7 +14,7 @@ export default function Detail({ addToCart }) {
   if (!loading && !product) return <PageNotFound />;
 
   return (
-    <>
+    <div id="detail">
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <h2>${product.price}</h2>
@@ -47,11 +47,7 @@ export default function Detail({ addToCart }) {
       <p>
         <Link to="/">Go Back</Link>
       </p>
-      <img
-        style={{ maxHeight: 400 }}
-        src={`/images/${product.image}`}
-        alt={product.category}
-      />
-    </>
+      <img src={`/images/${product.image}`} alt={product.category} />
+    </div>
   );
 }
