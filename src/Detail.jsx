@@ -11,7 +11,7 @@ export default function Detail({ addToCart }) {
   const [product, loading] = useFetch(`products/${id}`);
 
   if (loading) return <Spinner />;
-  if (!loading && !product) return <PageNotFound />;
+  if (!product) return <PageNotFound />;
 
   return (
     <div id="detail">
