@@ -19,6 +19,9 @@ function App() {
     try {
       return JSON.parse(localStorage.getItem("cart")) ?? [];
     } catch {
+      console.error(
+        "The localStorage cart could not be parsed into JSON. Resetting to an empty array."
+      );
       return [];
     }
   });
