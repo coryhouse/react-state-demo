@@ -7,7 +7,7 @@ import PageNotFound from "./PageNotFound";
 export default function Products() {
   const { category } = useParams();
   const [products, loading, error] = useFetch("products?category=" + category);
-  const [size, setSize] = useState(localStorage.getItem("shoe-size") || "");
+  const [size, setSize] = useState(localStorage.getItem("shoe-size") ?? "");
 
   function getFilteredProducts() {
     if (!products) return [];
