@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 
 export default function useFetchAll(urls) {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const prevUrls = useRef([]);
 
@@ -17,6 +17,7 @@ export default function useFetchAll(urls) {
     // Only re-run if the array of URLs passed in changes
     if (areEqual(prevUrls.current, urls)) return;
     prevUrls.current = urls;
+    setLoading(true);
     const promises = urls.map((url) =>
       fetch(process.env.REACT_APP_API_BASE_URL + url).then((response) => {
         if (response.ok) return response.json();
