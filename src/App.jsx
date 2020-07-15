@@ -52,6 +52,10 @@ function App() {
     });
   }
 
+  function emptyCart() {
+    setCart([]);
+  }
+
   const numItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
@@ -74,7 +78,7 @@ function App() {
             />
             <Route
               path="/checkout"
-              element={<Checkout emptyCart={() => setCart([])} />}
+              element={<Checkout emptyCart={emptyCart} />}
             />
             <Route path="/:category" element={<Products />} />
             <Route
