@@ -12,7 +12,7 @@ export default function Products() {
   function getFilteredProducts() {
     if (!products) return [];
     return size
-      ? products.filter((p) => p.sizes.find((s) => s === parseInt(size)))
+      ? products.filter((p) => p.skus.find((s) => s.size === parseInt(size)))
       : products;
   }
 

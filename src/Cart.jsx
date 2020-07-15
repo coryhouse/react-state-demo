@@ -9,11 +9,14 @@ export default function Cart({ cart, updateQuantity, numItemsInCart }) {
   const [products, loading, error] = useFetchAll(urls);
   const navigate = useNavigate();
 
-  function renderItem(item) {
-    const { id, size, quantity } = item;
-    const { price, name, image } = products.find((p) => p.id === parseInt(id));
+  function renderItem(itemInCart) {
+    const { id, sku, quantity } = itemInCart;
+    const { price, name, image, skus } = products.find(
+      (p) => p.id === parseInt(id)
+    );
+    const { size } = skus.find((s) => s.sku === sku);
     return (
-      <li key={id + size} className="cart-item">
+      <li key={sku} className="cart-item">
         <img src={`/images/${image}`} alt={name} />
         <div>
           <h3>{name}</h3>
@@ -22,9 +25,7 @@ export default function Cart({ cart, updateQuantity, numItemsInCart }) {
           <p>
             <select
               aria-label={`Select quantity for ${name} size ${size}`}
-              onChange={(e) =>
-                updateQuantity(id, size, parseInt(e.target.value))
-              }
+              onChange={(e) => updateQuantity(sku, parseInt(e.target.value))}
               value={quantity}
             >
               <option value="0">Remove</option>

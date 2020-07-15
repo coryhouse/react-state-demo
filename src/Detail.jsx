@@ -6,7 +6,7 @@ import PageNotFound from "./PageNotFound";
 
 export default function Detail({ addToCart }) {
   const navigate = useNavigate();
-  const [size, setSize] = useState("");
+  const [sku, setSku] = useState("");
   const { id } = useParams();
   const [product, loading] = useFetch(`products/${id}`);
 
@@ -21,13 +21,13 @@ export default function Detail({ addToCart }) {
       <p>
         <select
           aria-label="Select size"
-          onChange={(e) => setSize(e.target.value)}
-          value={size}
+          onChange={(e) => setSku(e.target.value)}
+          value={sku}
         >
           <option value="">What size?</option>
-          {product.sizes.map((s) => (
-            <option key={s} value={s}>
-              {s}
+          {product.skus.map((s) => (
+            <option key={s.sku} value={s.sku}>
+              {s.size}
             </option>
           ))}
         </select>
@@ -35,9 +35,9 @@ export default function Detail({ addToCart }) {
       <p>
         <button
           className="btn btn-primary"
-          disabled={!size}
+          disabled={!sku}
           onClick={() => {
-            addToCart(product.id, parseInt(size));
+            addToCart(product.id, sku);
             navigate("/cart");
           }}
         >

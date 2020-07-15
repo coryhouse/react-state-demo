@@ -29,27 +29,26 @@ function App() {
   // Persist cart in localStorage
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
-  function addToCart(id, size) {
+  function addToCart(id, sku) {
     setCart((items) => {
-      const alreadyInCart = items.find((i) => i.id === id && i.size === size);
+      const alreadyInCart = items.find((i) => i.sku === sku);
       if (alreadyInCart) {
-        return items.map((i) => {
-          const isMatchingItem = i.id === id && i.size === size;
-          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
-        });
+        // Return new array with matching item replaced
+        return items.map((i) =>
+          i.sku === sku ? { ...i, quantity: i.quantity + 1 } : i
+        );
       } else {
-        return [...items, { id, size, quantity: 1 }];
+        // Return new array with new item appended
+        return [...items, { id, sku, quantity: 1 }];
       }
     });
   }
 
-  function updateQuantity(id, size, quantity) {
+  function updateQuantity(sku, quantity) {
     setCart((items) => {
       return quantity === 0
-        ? items.filter((i) => !(i.id === id && i.size === size))
-        : items.map((i) =>
-            i.id === id && i.size === size ? { ...i, quantity } : i
-          );
+        ? items.filter((i) => i.sku !== sku)
+        : items.map((i) => (i.sku === sku ? { ...i, quantity } : i));
     });
   }
 
