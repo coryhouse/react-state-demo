@@ -3,11 +3,10 @@ import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Products from "./Products";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
-import Confirmation from "./Confirmation";
 
 function App() {
   // Note, can call React.useState if you prefer
@@ -20,6 +19,9 @@ function App() {
     try {
       return JSON.parse(localStorage.getItem("cart")) ?? [];
     } catch {
+      console.error(
+        "The localStorage cart could not be parsed into JSON. Resetting to an empty array."
+      );
       return [];
     }
   });
@@ -27,64 +29,64 @@ function App() {
   // Persist cart in localStorage
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
-  function addToCart(id, size) {
-    setCart((cart) => {
-      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
+  function addToCart(id, sku) {
+    setCart((items) => {
+      const alreadyInCart = items.find((i) => i.sku === sku);
       if (alreadyInCart) {
-        return cart.map((i) => {
-          const isMatchingItem = i.id === id && i.size === size;
-          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
-        });
+        // Return new array with matching item replaced
+        return items.map((i) =>
+          i.sku === sku ? { ...i, quantity: i.quantity + 1 } : i
+        );
       } else {
-        return [...cart, { id, size, quantity: 1 }];
+        // Return new array with new item appended
+        return [...items, { id, sku, quantity: 1 }];
       }
     });
   }
 
-  function updateCart(id, size, quantity) {
-    setCart((cart) => {
+  function updateQuantity(sku, quantity) {
+    setCart((items) => {
       return quantity === 0
-        ? cart.filter((i) => i.id !== id || (i.id === id && i.size !== size))
-        : cart.map((i) =>
-            i.id === id && i.size === size ? { ...i, quantity } : i
-          );
+        ? items.filter((i) => i.sku !== sku)
+        : items.map((i) => (i.sku === sku ? { ...i, quantity } : i));
     });
   }
+
+  function emptyCart() {
+    setCart([]);
+  }
+
+  const numItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <>
       <div className="content">
-        <Header cart={cart} />
+        <Header numItemsInCart={numItemsInCart} />
 
         <main>
-          <Switch>
-            <Route path="/" exact>
-              <h1>Welcome to Carved Rock Fitness</h1>
-            </Route>
-
-            <Route path="/cart">
-              <Cart cart={cart} updateCart={updateCart} />
-            </Route>
-
+          <Routes>
+            <Route path="/" element={<h1>Welcome to Carved Rock Fitness</h1>} />
+            <Route
+              path="/cart"
+              element={
+                <Cart
+                  cart={cart}
+                  updateQuantity={updateQuantity}
+                  numItemsInCart={numItemsInCart}
+                />
+              }
+            />
             <Route
               path="/checkout"
-              render={(reactRouterProps) => (
-                <Checkout emptyCart={() => setCart([])} {...reactRouterProps} />
-              )}
+              element={<Checkout emptyCart={emptyCart} />}
             />
-
-            <Route path="/confirmation">
-              <Confirmation />
-            </Route>
-
-            <Route path="/:category" exact>
-              <Products />
-            </Route>
-
-            <Route path="/:category/:id">
-              <Detail cart={cart} addToCart={addToCart} />
-            </Route>
-          </Switch>
+            <Route path="/:category" element={<Products />} />
+            <Route
+              path="/:category/:id"
+              element={<Detail addToCart={addToCart} />}
+            />
+            <Route path="/page-not-found" />
+          </Routes>
         </main>
       </div>
       <Footer />

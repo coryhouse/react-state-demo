@@ -1,26 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export default function useFetchAll(requests) {
+export default function useFetchAll(urls) {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const prevUrls = useRef([]);
 
   useEffect(() => {
-    if (data ?? error) return; // Only run once
-
-    const promises = requests.map(({ url, init }) =>
-      fetch(process.env.REACT_APP_API_BASE_URL + url, init).then((response) => {
+    // Only re-run if the array of URLs passed in changes
+    if (areEqual(prevUrls.current, urls)) {
+      setLoading(false);
+      return;
+    }
+    prevUrls.current = urls;
+    const promises = urls.map((url) =>
+      fetch(process.env.REACT_APP_API_BASE_URL + url).then((response) => {
         if (response.ok) return response.json();
-        throw new Error("Bad network response");
+        throw response;
       })
     );
 
     Promise.all(promises)
-      .then((data) => setData(data))
+      .then((json) => setData(json))
       .catch((err) => {
         console.error(err);
         setError(err);
-      });
-  }, [data, error, requests]);
+      })
+      .finally(() => setLoading(false));
+  }, [urls]);
 
-  return [data, error];
+  return [data, loading, error];
+}
+
+function areEqual(array1, array2) {
+  return (
+    array1.length === array2.length &&
+    array1.every((value, index) => value === array2[index])
+  );
 }

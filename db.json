@@ -6,7 +6,16 @@
       "image": "shoe1.jpg",
       "name": "Hiker",
       "price": 94.95,
-      "sizes": [7, 8],
+      "skus": [
+        {
+          "sku": "17",
+          "size": 7
+        },
+        {
+          "sku": "18",
+          "size": 8
+        }
+      ],
       "description": "This rugged boot will get you up the mountain safely."
     },
     {
@@ -15,7 +24,16 @@
       "image": "shoe2.jpg",
       "name": "Climber",
       "price": 78.99,
-      "sizes": [8, 9],
+      "skus": [
+        {
+          "sku": "28",
+          "size": 8
+        },
+        {
+          "sku": "29",
+          "size": 9
+        }
+      ],
       "description": "Sure-footed traction in slippery conditions."
     },
     {
@@ -24,7 +42,20 @@
       "image": "shoe3.jpg",
       "name": "Explorer",
       "price": 145.95,
-      "sizes": [7, 8, 9],
+      "skus": [
+        {
+          "sku": "37",
+          "size": 7
+        },
+        {
+          "sku": "38",
+          "size": 8
+        },
+        {
+          "sku": "39",
+          "size": 9
+        }
+      ],
       "description": "Look stylish while stomping in the mud."
     }
   ],
@@ -33,6 +64,16 @@
       "id": 1,
       "city": "",
       "country": ""
+    },
+    {
+      "city": "a",
+      "country": "China",
+      "id": 2
+    },
+    {
+      "city": "a",
+      "country": "China",
+      "id": 3
     }
   ]
 }

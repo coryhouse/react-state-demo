@@ -1,33 +1,32 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useFetchAll from "./services/useFetchAll";
-import Loader from "./Loader";
+import Spinner from "./Spinner";
 
-export default function Cart({ cart, updateCart }) {
-  // Using ref since not rendered, and need to avoid re-allocating on each render.
+export default function Cart({ cart, updateQuantity, numItemsInCart }) {
   const uniqueIdsInCart = [...new Set(cart.map((i) => i.id))];
-  const requests = uniqueIdsInCart.map((id) => ({ url: `products/${id}` }));
-  const [products] = useFetchAll(requests);
-  const history = useHistory();
+  const urls = uniqueIdsInCart.map((id) => `products/${id}`);
+  const [products, loading, error] = useFetchAll(urls);
+  const navigate = useNavigate();
 
   function renderItem(itemInCart) {
-    const { price, id, name, image } = products.find(
-      (s) => s.id === itemInCart.id
+    const { id, sku, quantity } = itemInCart;
+    const { price, name, image, skus } = products.find(
+      (p) => p.id === parseInt(id)
     );
+    const { size } = skus.find((s) => s.sku === sku);
     return (
-      <div key={id + itemInCart.size} className="cart-item">
+      <li key={sku} className="cart-item">
         <img src={`/images/${image}`} alt={name} />
         <div>
           <h3>{name}</h3>
           <p>${price}</p>
-          <p>Size: {itemInCart.size}</p>
+          <p>Size: {size}</p>
           <p>
             <select
-              aria-label={`Select quantity for ${name} size ${itemInCart.size}`}
-              onChange={(e) =>
-                updateCart(id, itemInCart.size, parseInt(e.target.value))
-              }
-              value={itemInCart.quantity}
+              aria-label={`Select quantity for ${name} size ${size}`}
+              onChange={(e) => updateQuantity(sku, parseInt(e.target.value))}
+              value={quantity}
             >
               <option value="0">Remove</option>
               <option value="1">1</option>
@@ -38,32 +37,30 @@ export default function Cart({ cart, updateCart }) {
             </select>
           </p>
         </div>
-      </div>
+      </li>
     );
   }
 
-  const totalQuantity = cart.reduce((total, item) => {
-    total = total + item.quantity;
-    return total;
-  }, 0);
-
-  if (cart.length > 0 && !products) return <Loader />;
+  if (loading) return <Spinner />;
+  if (error) throw error;
 
   return (
     <section id="cart">
       <h1>
-        {cart.length === 0
+        {numItemsInCart === 0
           ? "Your cart is empty."
-          : `${totalQuantity} Item${totalQuantity > 1 ? "s" : ""} in My Cart`}
+          : `${numItemsInCart} Item${numItemsInCart > 1 ? "s" : ""} in My Cart`}
       </h1>
       <p>
         <Link to="/shoes">Continue Shopping</Link>
       </p>
-      {cart.map(renderItem)}
+
+      <ul>{cart.map(renderItem)}</ul>
+
       {cart.length > 0 && (
         <button
           className="btn btn-primary"
-          onClick={() => history.push("/checkout")}
+          onClick={() => navigate("/checkout")}
         >
           Checkout
         </button>

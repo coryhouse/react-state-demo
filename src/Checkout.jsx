@@ -2,7 +2,6 @@ import React from "react";
 import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
-// Challenge: Finish building out the checkout with credit card, billing address, totals.
 const newAddress = {
   city: "",
   country: "",
@@ -12,6 +11,7 @@ const STATUS = {
   IDLE: "IDLE",
   SUBMITTED: "SUBMITTED",
   SUBMITTING: "SUBMITTING",
+  COMPLETED: "COMPLETED",
 };
 
 export default class Checkout extends React.Component {
@@ -56,7 +56,7 @@ export default class Checkout extends React.Component {
       this.setState({ status: STATUS.SUBMITTING });
       await saveShippingAddress(this.state.address);
       this.props.emptyCart();
-      this.props.history.push("/confirmation");
+      this.setState({ status: STATUS.COMPLETED });
     } else {
       this.setState({ status: STATUS.SUBMITTED });
     }
