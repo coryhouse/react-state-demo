@@ -1,10 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 import { getProduct } from "./services/productService";
 
-export default class Detail extends React.Component {
+// Wrap class to provide React Router data functionality
+export default function Wrapper(props) {
+  return <Detail navigate={useNavigate()} params={useParams()} {...props} />;
+}
+
+class Detail extends React.Component {
   state = {
     sku: "",
     loading: true,
