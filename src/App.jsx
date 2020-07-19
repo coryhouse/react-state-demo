@@ -7,7 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
-
+//test
 function App() {
   const [cart, setCart] = useState(() => {
     try {
