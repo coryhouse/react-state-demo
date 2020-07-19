@@ -78,6 +78,8 @@ export default class Checkout extends React.Component {
     const errors = this.errors();
     const { address, touched, status } = this.state;
 
+    if (status === STATUS.COMPLETED) return <h1>Thanks for shopping!</h1>;
+
     return (
       <>
         <h1>Shipping Info</h1>
