@@ -9,12 +9,6 @@ import Cart from "./Cart";
 import Checkout from "./Checkout";
 
 function App() {
-  // Note, can call React.useState if you prefer
-  // Build up state slowly. Start with const statusState = useState(); Then destructure just first element in array. Then 2nd.
-  // Pass func so it's only called once. (even though the initial value is only used on the first render, the function which initializes it still gets called))
-  //https://stackoverflow.com/questions/58539813/lazy-initial-state-where-to-use-it
-  // and https://dmitripavlutin.com/react-usestate-hook-guide/#3-lazy-initialization-of-state
-  // Or, can use https://www.npmjs.com/package/@rehooks/local-storage which syncs between tabs
   const [cart, setCart] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem("cart")) ?? [];
