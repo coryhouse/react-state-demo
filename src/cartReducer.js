@@ -1,31 +1,27 @@
 export default function cartReducer(cart, action) {
   switch (action.type) {
     case "add": {
-      const { id, size } = action;
-
-      const alreadyInCart = cart.find((i) => i.id === id && i.size === size);
-      if (alreadyInCart)
-        return cart.map((i) => {
-          const isMatchingItem = i.id === id && i.size === size;
-          return isMatchingItem ? { ...i, quantity: i.quantity + 1 } : i;
-        });
-      return [...cart, { id, size, quantity: 1 }];
+      const { id, sku } = action;
+      const itemInCart = cart.find((i) => i.sku === sku);
+      if (itemInCart) {
+        // Return new array with matching item replaced
+        return cart.map((i) =>
+          i.sku === sku ? { ...i, quantity: i.quantity + 1 } : i
+        );
+      } else {
+        // Return new array with new item appended
+        return [...cart, { id, sku, quantity: 1 }];
+      }
     }
 
     case "empty":
       return [];
 
     case "changeQuantity": {
-      const { quantity, size, id } = action;
-      if (quantity === 0) {
-        // Keep items that have a different id, or have the same id, but a different size
-        return cart.filter(
-          (i) => i.id !== id || (i.id === id && i.size !== size)
-        );
-      }
-      return cart.map((i) =>
-        i.id === id && i.size === size ? { ...i, quantity } : i
-      );
+      const { quantity, sku } = action;
+      return quantity === 0
+        ? cart.filter((i) => i.sku !== sku)
+        : cart.map((i) => (i.sku === sku ? { ...i, quantity } : i));
     }
 
     default:

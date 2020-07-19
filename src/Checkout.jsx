@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { saveShippingAddress } from "./services/shippingService";
 
 // Declare static data outside the component to avoid needless recreation on each render.
-// Challenge: Finish building out the checkout with credit card, billing address, totals.
 const newAddress = {
   city: "",
   country: "",
@@ -13,34 +11,19 @@ const STATUS = {
   IDLE: "IDLE",
   SUBMITTED: "SUBMITTED",
   SUBMITTING: "SUBMITTING",
+  COMPLETED: "COMPLETED",
 };
 
 export default function Checkout({ dispatch }) {
-  const history = useHistory();
-  // Point: When to split vs unify state.
-  // Tradeoff: unifying makes it easier to send to server, but slightly more work to update.
   const [address, setAddress] = useState(newAddress);
   // Object with property for each field that has been touched.
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState(STATUS.IDLE);
+  const [saveError, setSaveError] = useState(null);
 
   // Derived state
   const errors = getErrors(address);
   const isValid = Object.keys(errors).length === 0;
-
-  // Show controlled vs uncontrolled form.
-  function handleChange(e) {
-    e.persist();
-    // Using callback form of setter here since we need the existing state
-    setAddress((curAddress) => {
-      // Note that we're storing the new data here and passing to validate. Otherwise, validate would use stale data since setting state is async.
-      const updatedAddress = {
-        ...curAddress,
-        [e.target.id]: e.target.value,
-      };
-      return updatedAddress;
-    });
-  }
 
   function getErrors(address) {
     const errors = {};
@@ -49,21 +32,38 @@ export default function Checkout({ dispatch }) {
     return errors;
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  function handleChange(e) {
+    e.persist();
+    setAddress((curAddress) => {
+      return {
+        ...curAddress,
+        [e.target.id]: e.target.value,
+      };
+    });
+  }
+
+  function handleBlur(e) {
+    setTouched({ ...touched, [e.target.id]: true });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
     if (isValid) {
       setStatus(STATUS.SUBMITTING);
-      await saveShippingAddress(address);
-      dispatch({ type: "empty" });
-      history.push("/confirmation");
+      try {
+        await saveShippingAddress(address);
+        dispatch({ type: "empty" });
+        setStatus(STATUS.COMPLETED);
+      } catch (err) {
+        setSaveError(err);
+      }
     } else {
       setStatus(STATUS.SUBMITTED);
     }
   }
 
-  function handleBlur(event) {
-    setTouched({ ...touched, [event.target.id]: true });
-  }
+  if (saveError) throw saveError;
+  if (status === STATUS.COMPLETED) return <h1>Thanks for shopping!</h1>;
 
   return (
     <>

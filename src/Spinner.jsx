@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Loader() {
+export default function Spinner() {
   return (
     <div className="lds-container">
       <div className="lds-dual-ring"></div>

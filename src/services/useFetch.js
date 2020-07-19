@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
 
-export default function useFetch(url, init) {
+export default function useFetch(url) {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (data ?? error) return; // Only fetch once
-    fetch(process.env.REACT_APP_API_BASE_URL + url, init)
+    fetch(process.env.REACT_APP_API_BASE_URL + url)
       .then((response) => {
         if (response.ok) return response.json();
-        setError("Bad network response.");
+        throw response;
       })
       .then((data) => setData(data))
       .catch((err) => {
         console.error(err);
         setError(err);
-      });
-  }, [data, error, init, url]);
+      })
+      .finally(() => setLoading(false));
+  }, [url]);
 
-  return [data, error];
+  return [data, loading, error];
 }

@@ -3,11 +3,10 @@ import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Products from "./Products";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
 import Checkout from "./Checkout";
-import Confirmation from "./Confirmation";
 import cartReducer from "./cartReducer";
 
 function App() {
@@ -19,37 +18,37 @@ function App() {
   // Persist cart in localStorage
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
 
+  const numItemsInCart = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       <div className="content">
-        <Header cart={cart} />
+        <Header numItemsInCart={numItemsInCart} />
 
         <main>
-          <Switch>
-            <Route path="/" exact>
-              <h1>Welcome to Carved Rock Fitness</h1>
-            </Route>
-
-            <Route path="/cart">
-              <Cart cart={cart} dispatch={dispatch} />
-            </Route>
-
-            <Route path="/checkout">
-              <Checkout dispatch={dispatch} />
-            </Route>
-
-            <Route path="/confirmation">
-              <Confirmation />
-            </Route>
-
-            <Route path="/:category" exact>
-              <Products />
-            </Route>
-
-            <Route path="/:category/:id">
-              <Detail cart={cart} dispatch={dispatch} />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/" element={<h1>Welcome to Carved Rock Fitness</h1>} />
+            <Route
+              path="/cart"
+              element={
+                <Cart
+                  cart={cart}
+                  dispatch={dispatch}
+                  numItemsInCart={numItemsInCart}
+                />
+              }
+            />
+            <Route
+              path="/checkout"
+              element={<Checkout dispatch={dispatch} />}
+            />
+            <Route path="/:category" element={<Products />} />
+            <Route
+              path="/:category/:id"
+              element={<Detail dispatch={dispatch} />}
+            />
+            <Route path="/page-not-found" />
+          </Routes>
         </main>
       </div>
       <Footer />
