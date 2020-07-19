@@ -1,53 +1,64 @@
-import React, { useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import useFetch from "./services/useFetch";
+import React from "react";
+import { Link } from "react-router-dom";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
+import { getProduct } from "./services/productService";
 
-export default function Detail({ addToCart }) {
-  const navigate = useNavigate();
-  const [sku, setSku] = useState("");
-  const { id } = useParams();
-  const [product, loading] = useFetch(`products/${id}`);
+export default class Detail extends React.Component {
+  state = {
+    sku: "",
+    loading: true,
+    product: null,
+  };
 
-  if (loading) return <Spinner />;
-  if (!product) return <PageNotFound />;
+  componentDidMount() {
+    getProduct(this.props.params.id)
+      .then((product) => this.setState({ product }))
+      .finally(() => this.setState({ loading: false }));
+  }
 
-  return (
-    <div id="detail">
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <p id="price">${product.price}</p>
-      <p>
-        <select
-          aria-label="Select size"
-          onChange={(e) => setSku(e.target.value)}
-          value={sku}
-        >
-          <option value="">What size?</option>
-          {product.skus.map((s) => (
-            <option key={s.sku} value={s.sku}>
-              {s.size}
-            </option>
-          ))}
-        </select>
-      </p>
-      <p>
-        <button
-          className="btn btn-primary"
-          disabled={!sku}
-          onClick={() => {
-            addToCart(product.id, sku);
-            navigate("/cart");
-          }}
-        >
-          Add to cart
-        </button>
-      </p>
-      <p>
-        <Link to="/">Go Back</Link>
-      </p>
-      <img src={`/images/${product.image}`} alt={product.category} />
-    </div>
-  );
+  render() {
+    const { loading, product, sku } = this.state;
+
+    if (loading) return <Spinner />;
+    if (!product) return <PageNotFound />;
+
+    return (
+      <div id="detail">
+        <h1>{product.name}</h1>
+        <p>{product.description}</p>
+        <p id="price">${product.price}</p>
+        <p>
+          <select
+            aria-label="Select size"
+            onChange={(e) => this.setState({ sku: e.target.value })}
+            value={sku}
+          >
+            <option value="">What size?</option>
+            {product.skus.map((s) => (
+              <option key={s.sku} value={s.sku}>
+                {s.size}
+              </option>
+            ))}
+          </select>
+        </p>
+        <p>
+          <button
+            className="btn btn-primary"
+            disabled={!sku}
+            onClick={() => {
+              this.props.addToCart(product.id, sku);
+              this.props.navigate("/cart");
+            }}
+          >
+            Add to cart
+          </button>
+        </p>
+        <p>
+          <Link to="/">Go Back</Link>
+        </p>
+        <img src={`/images/${product.image}`} alt={product.category} />
+      </div>
+    );
+  }
 }
