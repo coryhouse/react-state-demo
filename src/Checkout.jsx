@@ -14,7 +14,7 @@ const STATUS = {
   COMPLETED: "COMPLETED",
 };
 
-export default function Checkout({ emptyCart }) {
+export default function Checkout({ dispatch }) {
   const [address, setAddress] = useState(newAddress);
   // Object with property for each field that has been touched.
   const [touched, setTouched] = useState({});
@@ -52,7 +52,7 @@ export default function Checkout({ emptyCart }) {
       setStatus(STATUS.SUBMITTING);
       try {
         await saveShippingAddress(address);
-        emptyCart();
+        dispatch({ type: "empty" });
         setStatus(STATUS.COMPLETED);
       } catch (err) {
         setSaveError(err);
